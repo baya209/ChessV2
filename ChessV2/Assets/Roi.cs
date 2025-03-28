@@ -5,7 +5,7 @@ public class Roi : Piece
     
     public Roi(int[,] tableau, int ligne, int colonne, int couleur) : base(tableau, ligne, colonne, couleur)
     {
-        setSymbole('r');
+        setSymbole('R');
     }
     public override bool deplacer(int l, int c)
     {

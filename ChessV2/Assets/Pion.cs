@@ -3,6 +3,7 @@ public class Pion : Piece
 {
     public Pion(int[,] tableau, int ligne, int colonne, int couleur) : base(tableau, ligne, colonne, couleur)
     {
+        setSymbole('P');
     }
 
     public override bool deplacer(int l, int c){//  c colonne finale, l ligne finale

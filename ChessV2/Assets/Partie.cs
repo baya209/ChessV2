@@ -37,8 +37,16 @@ public class Partie
             pieces.Add(pion3);
             
         }
-        Roi roiNoir = new Roi(tableau,7,4,-1);
+        Roi roiNoir = new Roi(tableau,4,7,-1);
         Roi roiBlanc = new Roi(tableau, 4, 0, 1);
+        Tour tourN1 = new Tour(tableau, 0, 7, -1);
+        Tour tourN2 = new Tour(tableau, 7, 7, -1);
+        Tour tourB1 = new Tour(tableau, 0, 0, 1);
+        Tour tourB2 = new Tour(tableau, 7, 0, 1);
+        pieces.Add(tourN2);
+        pieces.Add(tourN1);
+        pieces.Add(tourB2);
+        pieces.Add(tourB1);
         pieces.Add(roiBlanc);
         pieces.Add(roiNoir);
         plateau = new Plateau(tableau,pieces);
@@ -81,7 +89,7 @@ public class Partie
                 plateau.getTableau()[li, ci] = 0;
                 plateau.getTableau()[lf, cf] = deplace.getCouleur();
 
-
+                return true;
             }
             
             return false;
@@ -126,14 +134,27 @@ public class Partie
         return false;
     }
 
-    public void afficher()
+    public string afficher()
     {
         string[,] affichage = new string[8,8];
-        for (int i = 0; i < plateau.getTableau().GetLength(0); i++)
+        for (int i = 0; i < 8; i++)
         {
-            for (int j = 0; j < plateau.getTableau().GetLength(1); j++)
+            for (int j = 0; j < 8; j++)
             {
-                affichage[i, j] = plateau.getTableau()[i, j].ToString();
+                if (plateau.getTableau()[i,j] == -1)
+                {
+                    affichage[i, j] = "N";
+                    
+                }
+                else if(plateau.getTableau()[i, j] == 0)
+                {
+                    affichage[i, j] = "00";
+                }
+                else
+                {
+                    affichage[i, j] = "B";
+                }
+                
             }
         }
         foreach (var piece in plateau.getPieces()) {
@@ -146,7 +167,7 @@ public class Partie
             }
             final += "\n";
         }
-        Debug.Log(final);
+        return final;
         
     }
 }

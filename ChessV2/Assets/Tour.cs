@@ -6,7 +6,7 @@ public class Tour : Piece
     
     public Tour(int[,] tableau, int ligne, int colonne, int couleur) : base(tableau, ligne, colonne, couleur) 
     {
-        setSymbole('t');
+        setSymbole('T');
     }
     public override bool deplacer(int l, int c)
     {
@@ -89,7 +89,7 @@ public class Tour : Piece
             }
             danger[i, getLigne()] = true;
         }
-        for (int i = getColonne()-1; i >= getColonne()-1; i--)
+        for (int i = getColonne()-1; i >= 0; i--)
         {
             danger[i, getLigne()] = true;
             if (getTableau()[i, getLigne()] != 0)
@@ -105,7 +105,7 @@ public class Tour : Piece
                 break;
             }
         }
-        for (int i = getLigne() - 1; i >= getLigne()-1; i--)
+        for (int i = getLigne() - 1; i >= 0; i--)
         {
             danger[getColonne(), i] = true;
             if (getTableau()[getColonne(), i] != 0)
