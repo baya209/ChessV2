@@ -15,7 +15,7 @@ public class NewMonoBehaviourScript
     * */
 
 
-    public int profondeurMax = 3; //sera changer par une constante
+    /*public int profondeurMax = 3; //sera changer par une constante
     public int valeurMax = 1000000;
     public int NegaMax(Plateau plateau, int profondeur, int alpha, int beta, Couleur joueurActuel)
     {
@@ -109,7 +109,7 @@ public class NewMonoBehaviourScript
     { 0, 0, 1, 2, 2, 1, 0, 0 }
     };
     */
-    public int EvaluerControleCentre(Plateau plateau, Couleur joueurActuel)
+    /*public int EvaluerControleCentre(Plateau plateau, Couleur joueurActuel)
     {
         int score = 0;
         foreach (Piece piece in plateau.pieces)
@@ -133,9 +133,9 @@ public class NewMonoBehaviourScript
 
         }
 
-        return score;
+        return score;*/
 
-    }
+    //}
 
 
 
