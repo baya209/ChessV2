@@ -47,11 +47,28 @@ public class Cavalier : Piece
 
     public override bool[,] isDanger(bool[,] danger)
     {
-        //possibilite des mouvement
+        //possibilite des mouvements (8 directions)
         int[,] mouvements = {
             { -2, -1 }, { -2, 1 }, { -1, -2 }, { -1, 2 },
             { 1, -2 }, { 1, 2 }, { 2, -1 }, { 2, 1 }
         };
+
+
+        //parcour chaque directions
+        for (int i = 0; i < mouvements.GetLength(0); i++)
+        {
+            //nouvelle position apres le coup
+            int nouveauL = getLigne() + mouvements[i, 0];
+            int nouveauC = getColonne() + mouvements[i, 1];
+            
+            //limite du plateau
+            if (nouveauL >= 0 && nouveauL < 8 && nouveauC >= 0 && nouveauC < 8)
+            {
+                danger[nouveauL, nouveauC] = true;
+            }
+        }
+        return danger; // retourn le tebleau
+
 
     }
 }
