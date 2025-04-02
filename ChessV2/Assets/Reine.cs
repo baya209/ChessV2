@@ -8,9 +8,8 @@ public class Reine : Piece
         setSymbole('D');
     }
 
-    public override bool deplacer(int l, int c) // Méthode qui vérifie si la reine peut se déplacer à la position (l, c)
+    public override bool deplacer(int l, int c) 
     {
-        // Vérifie si la case cible est vide 
         if (getTableau()[l, c] == 0 || getTableau()[l, c] == (-1 * getCouleur()))
         {
             if (c != getColonne() && l == getLigne())
