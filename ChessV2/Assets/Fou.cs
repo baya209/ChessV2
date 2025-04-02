@@ -31,7 +31,6 @@ public class Fou : Piece
                 if (c > getColonne())
                 {
                     directionColonne = 1; // droite
-
                 }
                 else
                 {
@@ -39,8 +38,8 @@ public class Fou : Piece
                 }
 
 
-                int ligneActuelle = getLigne() + directionLigne; //initialiser la ligne actuelle 
-                int colonneActuelle = getColonne() + directionColonne; // Initialise la colonne actuelle 
+                int ligneActuelle = getLigne();  //initialiser la ligne actuelle 
+                int colonneActuelle = getColonne(); // Initialise la colonne actuelle 
 
                 while (ligneActuelle != l && colonneActuelle != c) // Parcourt les cases diagonales jusqu'à la position rentrée
                 {
