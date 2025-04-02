@@ -358,6 +358,7 @@
 "Assets/Piece.cs"
 "Assets/Pion.cs"
 "Assets/Plateau.cs"
+"Assets/Reine.cs"
 "Assets/Roi.cs"
 "Assets/Tour.cs"
 -langversion:9.0
