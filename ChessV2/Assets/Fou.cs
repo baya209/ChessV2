@@ -10,50 +10,54 @@ public class Fou : Piece
 
     public override bool deplacer(int l, int c)
     {
-        // vérifier s'il y a un déplacement en diagonale
-        if (Math.Abs(l - getLigne()) == Math.Abs(c - getColonne()))
+        // vérifie si la case et vide 
+        if (getTableau()[l, c] == 0 || getTableau()[l, c] == (-1 * getCouleur()))
         {
-
-            int directionLigne;
-            if (l > getLigne())
+            // vérifier s'il y a un déplacement en diagonale
+            if (Math.Abs(l - getLigne()) == Math.Abs(c - getColonne()))
             {
-                directionLigne = 1; // Se déplace vers le bas
-            }
-            else
-            {
-                directionLigne = -1; // Se déplace vers le haut
-            }
-            int directionColonne;
 
-            if (c > getColonne())
-            {
-                directionColonne = 1; // droite
-
-            }
-            else
-            {
-                directionColonne = -1; //gauche
-            }
-
-
-            int ligneActuelle = getLigne() + directionLigne; //initialiser la ligne actuelle 
-            int colonneActuelle = getColonne() + directionColonne; // Initialise la colonne actuelle 
-
-            while (ligneActuelle != l && colonneActuelle != c) // Parcourt les cases diagonales jusqu'à la position rentrée
-            {
-                if (getTableau()[ligneActuelle, colonneActuelle] != 0) // Vérifie si une pièce bloque le passage
+                int directionLigne;
+                if (l > getLigne())
                 {
-                    return false;
+                    directionLigne = 1; // Se déplace vers le bas
                 }
-                ligneActuelle += directionLigne; // si cest vert le haut ça aditionne si c'est vers le bas ça soustrait
-                colonneActuelle += directionColonne; // si cest vert le haut ça aditionne si c'est vers le bas ça soustrait
+                else
+                {
+                    directionLigne = -1; // Se déplace vers le haut
+                }
+                int directionColonne;
 
+                if (c > getColonne())
+                {
+                    directionColonne = 1; // droite
+
+                }
+                else
+                {
+                    directionColonne = -1; //gauche
+                }
+
+
+                int ligneActuelle = getLigne() + directionLigne; //initialiser la ligne actuelle 
+                int colonneActuelle = getColonne() + directionColonne; // Initialise la colonne actuelle 
+
+                while (ligneActuelle != l && colonneActuelle != c) // Parcourt les cases diagonales jusqu'à la position rentrée
+                {
+                    if (getTableau()[ligneActuelle, colonneActuelle] != 0) // Vérifie si une pièce bloque le passage
+                    {
+                        return false;
+                    }
+                    ligneActuelle += directionLigne; // si cest vert le haut ça aditionne si c'est vers le bas ça soustrait
+                    colonneActuelle += directionColonne; // si cest vert le haut ça aditionne si c'est vers le bas ça soustrait
+
+                }
+                return true;
             }
-            return true;
-        }
-        else
-        {
-            Debug.LogError("Trajectoire non valide pour le Fou");
+            else
+            {
+                Debug.LogError("Trajectoire non valide pour le Fou");
+            }
         }
         return false;
     }
