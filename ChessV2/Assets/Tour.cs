@@ -92,6 +92,7 @@ public class Tour : Piece
         for (int i = getColonne()-1; i >= getColonne()-1; i--)
         {
             danger[i, getLigne()] = true;
+            // c'est pas sensé etre ligne apres ça colonne???
             if (getTableau()[i, getLigne()] != 0)
             {
                 break;
