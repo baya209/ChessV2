@@ -43,12 +43,32 @@ public class Partie
         Tour tourN2 = new Tour(tableau, 7, 7, -1);
         Tour tourB1 = new Tour(tableau, 0, 0, 1);
         Tour tourB2 = new Tour(tableau, 7, 0, 1);
+        Reine reineBlanc = new Reine(tableau, 3, 0, 1);
+        Reine reineNoir = new Reine(tableau, 3, 7, -1);
+        Fou fouB1 = new Fou(tableau, 2, 0, 1);
+        Fou fouB2 = new Fou(tableau, 5, 0, 1);
+        Fou fouN1 = new Fou(tableau, 2, 7, -1);
+        Fou fouN2 = new Fou(tableau, 5, 7, -1);
+        Cavalier cavalierB1 = new Cavalier(tableau, 1, 0, 1);
+        Cavalier cavalierB2 = new Cavalier(tableau, 6, 0, 1);
+        Cavalier cavalierN1 = new Cavalier(tableau, 1, 7, -1);
+        Cavalier cavalierN2 = new Cavalier(tableau, 6, 7, -1);
+        pieces.Add(reineBlanc);
+        pieces.Add(reineNoir);
         pieces.Add(tourN2);
         pieces.Add(tourN1);
         pieces.Add(tourB2);
         pieces.Add(tourB1);
         pieces.Add(roiBlanc);
         pieces.Add(roiNoir);
+        pieces.Add(fouB1);
+        pieces.Add(fouB2);
+        pieces.Add(fouN1);
+        pieces.Add(fouN2);
+        pieces.Add(cavalierB1);
+        pieces.Add(cavalierB2);
+        pieces.Add(cavalierN1);
+        pieces.Add(cavalierN2);
         plateau = new Plateau(tableau,pieces);
     }
     
