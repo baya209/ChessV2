@@ -77,3 +77,4 @@ ChessV2/Library/ArtifactDB
 /ChessV2/Library
 /ChessV2/Temp
 /ChessV2/Temp
+*.db
