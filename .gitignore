@@ -78,3 +78,5 @@ ChessV2/Library/ArtifactDB
 /ChessV2/Temp
 /ChessV2/Temp
 *.db
+.DS_Store
+.DS_Store
