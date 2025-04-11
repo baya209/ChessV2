@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class NewMonoBehaviourScript
 {
+    
     /* 
     * place vide  = 0
     * pions = 100
@@ -14,31 +15,29 @@ public class NewMonoBehaviourScript
     * pour piece noir -> mettre valeur en negatif
     * */
 
-
-    /*public int profondeurMax = 3; //sera changer par une constante
+    
+    public int profondeurMax = 3; //sera changer par une constante
     public int valeurMax = 1000000;
-    public int NegaMax(Plateau plateau, int profondeur, int alpha, int beta, Couleur joueurActuel)
+    public int NegaMax(Plateau plateau, int profondeur, int alpha, int beta, int couleur)
     {
 
-        if (profondeur == 0 || plateau.EstFinDePartie())
+        //if (profondeur == 0 || plateau.EstFinDePartie())
         {
-            return EvaluerEchiquier(plateau, joueurActuel);
+            return EvaluerEchiquier(plateau, couleur);
         }
-
-
         int meilleurScore = -valeurMax;
         //logique du plateau?
-        List<Coup> coupsPossibles = GenererTousLesCoups(plateau, joueurActuel);
-        foreach (Coup coup in coupsPossibles)
+        //List<Coup> coupsPossibles = GenererTousLesCoups(plateau, couleur);
+       // foreach (Coup coup in coupsPossibles)
         {
             // Jouer le coup
-            JouerCoup(plateau, coup);
+            //JouerCoup(plateau, coup);
 
             // Appel recursif en inversant le joueur
-            int score = -NegaMax(plateau, profondeur - 1, -beta, -alpha, InverserCouleur(joueurActuel));
+            int score = -NegaMax(plateau, profondeur - 1, -beta, -alpha, InverserCouleur(couleur));
 
             // Annuler le coup pour revenir à l'état précédent
-            AnnulerCoup(plateau, coup);
+            //AnnulerCoup(plateau, coup);
 
             meilleurScore = Mathf.Max(meilleurScore, score);
 
@@ -48,45 +47,99 @@ public class NewMonoBehaviourScript
         return meilleurScore;
 
     }
-    public Coup TrouverMeilleurCoup(Plateau plateau, Couleur joueurActuel)
+
+
+
+    public Coup TrouverMeilleurCoup(Plateau plateau, int couleur)
     {
         int meilleurScore = -valeurMax;
         Coup meilleurCoup = null;
-        List<Coup> coupsPossibles = GenererTousLesCoups(plateau, joueurActuel);
+
+        List<Coup> coupsPossibles = GenererTousLesCoups(plateau, couleur);
+
 
         foreach (Coup coup in coupsPossibles)
         {
             JouerCoup(plateau, coup);
-            int score = -NegaMax(plateau, profondeurMax - 1, -valeurMax, valeurMax, InverserCouleur(joueurActuel));
+            int score = -NegaMax(plateau, profondeurMax - 1, -valeurMax, valeurMax, -couleur);
             AnnulerCoup(plateau, coup);
 
-            //comparer les score pour etablir le meilleur
             if (score > meilleurScore)
             {
                 meilleurScore = score;
                 meilleurCoup = coup;
             }
         }
+
+  
         return meilleurCoup;
+
     }
-    //TODO: methode inversion de couleur joueur
+
+
+    public void JouerCoup(Plateau plateau, Coup coup)
+    {
+        plateau.getTableau()[coup.lf, coup.cf] = plateau.getTableau()[coup.li, coup.ci];
+        plateau.getTableau()[coup.li, coup.ci] = 5; // Case vide après le déplacement
+    }
+
+    //methode pour revenir en arriere
+    public void AnnulerCoup(Plateau plateau, Coup coup)
+    {
+        plateau.getTableau()[coup.li, coup.ci] = plateau.getTableau()[coup.lf, coup.cf];
+        plateau.getTableau()[coup.lf, coup.cf] = coup.pieceCapturee;
+    }
+
+    public List <Coup> GenererTousLesCoups(Plateau plateau, int couleur)
+    {
+        List<Coup> coupsPossibles = new List<Coup>();
+
+        foreach (Piece piece in plateau.getPieces())
+        {
+
+            if (piece.getCouleur() == couleur)
+            {
+                /*List<(int, int)> mouvements = piece.GenererMouvementsPossibles(plateau);
+                foreach ((int lf, int cf) in mouvements)
+                {
+                    int pieceCapturee = plateau.getTableau()[lf, cf];
+                    coupsPossibles.Add(new Coup(piece.getLigne(), piece.getColonne(), lf, cf, pieceCapturee));
+                }*/
+            }
+
+        }
+
+
+
+        return coupsPossibles;
+    }
+
+ 
     //TODO: generer tout les coups
 
+    
+    public int InverserCouleur(int couleur)
+    {
+        couleur = -(couleur);
+        
+        return couleur;
 
-
-    public int EvaluerEchiquier(Plateau plateau, Couleur joueurActuel)
+    }
+    public int EvaluerEchiquier(Plateau plateau, int couleur)
     {
         int score = 0;
         //score materiel
-        foreach(Piece piece in plateau.pieces)//parcourir le tableau de piece
-        {
-            int valeur = GetValeurPieces(piece); 
-            // si couleur cest la meme que le joueur actuel alors on ajoute au score 
 
-            score += (piece.getCouleur == joueurActuel) ? valeur : -valeur; 
+        foreach(Piece piece in plateau.getPieces())//parcourir le tableau de piece
+        {
+            int valeur = piece.getValeur();
+            // si couleur cest la meme que le joueur actuel alors on ajoute au score 
+            int couleurpiecearray = piece.getCouleur();
+
+            score += (couleurpiecearray == couleur ) ? valeur : -valeur; 
 
         }
-        score += EvaluerControleCentre(Plateau plateau,joueurActuel);
+        score += EvaluerControleCentre( plateau, couleur);
 
 
         return score;
@@ -96,8 +149,8 @@ public class NewMonoBehaviourScript
     
 
 
-    /*
-     *   //tableau
+    
+       //tableau
     int[,] bonusCentre = {
     { 0, 0, 1, 2, 2, 1, 0, 0 },
     { 0, 1, 2, 3, 3, 2, 1, 0 },
@@ -108,14 +161,15 @@ public class NewMonoBehaviourScript
     { 0, 1, 2, 3, 3, 2, 1, 0 },
     { 0, 0, 1, 2, 2, 1, 0, 0 }
     };
-    */
-    /*public int EvaluerControleCentre(Plateau plateau, Couleur joueurActuel)
+    
+    public int EvaluerControleCentre(Plateau plateau, int joueurActuel)
     {
         int score = 0;
-        foreach (Piece piece in plateau.pieces)
+        foreach (Piece piece in plateau.getPieces())
+
         {
-            int bonus = bonusCentre[piece.Position.x, piece.Position.y];
-            int valeurPiece = GetValeurPieces(piece);
+            int bonus = bonusCentre[piece.getLigne(), piece.getColonne()];
+            int valeurPiece = piece.getValeur();
 
 
             //si la piece est un roi on enleve le bonus 
@@ -129,20 +183,18 @@ public class NewMonoBehaviourScript
 
             // Appliquer le bonus en fonction de la piece
             //ne pas etre applique aux pions
-            score += (piece.getCouleur == joueurActuel) ? bonus * (valeurPiece > 100 ? 1 : 0) : -bonus * (valeurPiece > 100 ? 1 : 0);
+            score += (piece.getCouleur() == joueurActuel) ? bonus * (valeurPiece > 100 ? 1 : 0) : -bonus * (valeurPiece > 100 ? 1 : 0);
 
         }
 
-        return score;*/
-
-    //}
-
-
+        return score;
+    
+    }
 
 
 
+    
+    
 
 }
-
-
 
