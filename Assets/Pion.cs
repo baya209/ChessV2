@@ -14,11 +14,11 @@ public class Pion : Piece
             {
                 return true;
             }
-            else if(getTableau()[c-1, l] == 0&& (c == (getColonne() + 2) && (getCouleur() == 1 && getColonne() == 1)))// Pion blanc qui avance de deux cases  
+            else if(getTableau()[l, c - 1] == 0&& (c == (getColonne() + 2) && (getCouleur() == 1 && getColonne() == 1)))// Pion blanc qui avance de deux cases  
             {
                 return true;
             }
-            else if (getTableau()[c + 1, l] == 0 && getCouleur() == -1 && getColonne() == 7 && c == (getColonne() - 2)) // Pion noir qui avance de deux cases
+            else if (getTableau()[l, c+1] == 0 && getCouleur() == -1 && getColonne() == 7 && c == (getColonne() - 2)) // Pion noir qui avance de deux cases
             {
                 return true;
             }

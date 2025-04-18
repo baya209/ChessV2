@@ -28,8 +28,7 @@ public class Cavalier : Piece
             {
                 return true;
             }
-            
-      
+       
             else
             {
                 Debug.LogError("Position occupée par une pièce de meme couleur");

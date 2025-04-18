@@ -16,9 +16,9 @@ public class Tour : Piece
             {
                 if (c > getColonne())
                 {
-                    for (int i = getColonne()+1; i <= c; i++)
+                    for (int i = getColonne()+1; i < c; i++)
                     {
-                        if (getTableau()[i, l] != 0)
+                        if (getTableau()[l, i] != 0)
                         {
                             Debug.LogError("Piece sur la trajectoire");
                             return false;
@@ -30,7 +30,7 @@ public class Tour : Piece
                 {
                     for (int i = c-1; i > getColonne(); i--)
                     {
-                        if (getTableau()[i, l] != 0)
+                        if (getTableau()[l, i] != 0)
                         {
                             Debug.LogError("Piece sur la trajectoire");
                             return false;
@@ -44,10 +44,12 @@ public class Tour : Piece
             {
                 if (l > getLigne())
                 {
-                    for (int i = getLigne()+1; i <= l; i++)
+                    for (int i = getLigne()+1; i < l; i++)
                     {
-                        if (getTableau()[c, i] != 0)
+                        Debug.Log(getTableau()[i, c]);
+                        if (getTableau()[i, c] != 0)
                         {
+                            
                             Debug.LogError("Piece sur la trajectoire");
                             return false;
                         }
@@ -58,7 +60,7 @@ public class Tour : Piece
                 {
                     for (int i = l-1; i > getLigne(); i--)
                     {
-                        if (getTableau()[c, i] != 0)
+                        if (getTableau()[i, c] != 0)
                         {
                             Debug.LogError("Piece sur la trajectoire");
                             return false;
@@ -82,34 +84,34 @@ public class Tour : Piece
     public override bool[,] isDanger(bool[,] danger)
     {
         for (int i = getColonne()+1; i < 8 - getColonne(); i++) {
-            danger[i, getLigne()] = true;
+            danger[getLigne(),i] = true;
             if (getTableau()[i, getLigne()] != 0)
             {
                 break;
             }
-            danger[i, getLigne()] = true;
+            danger[getLigne(), i] = true;
         }
         for (int i = getColonne()-1; i >= 0; i--)
         {
-            danger[i, getLigne()] = true;
+            danger[getLigne(), i] = true;
             // c'est pas sensé etre ligne apres ça colonne???
-            if (getTableau()[i, getLigne()] != 0)
+            if (getTableau()[getLigne(), i] != 0)
             {
                 break;
             }
         }
         for (int i = getLigne()+1; i < 8 - getLigne(); i++)
         {
-            danger[getColonne(), i] = true;
-            if (getTableau()[getColonne(), i] != 0)
+            danger[i,getColonne()] = true;
+            if (getTableau()[i, getColonne()] != 0)
             {   
                 break;
             }
         }
         for (int i = getLigne() - 1; i >= 0; i--)
         {
-            danger[getColonne(), i] = true;
-            if (getTableau()[getColonne(), i] != 0)
+            danger[i, getColonne()] = true;
+            if (getTableau()[i, getColonne()] != 0)
             {
                 break;
             }
