@@ -1,56 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Cavalier : Piece
 {
+    //possibilite des mouvements (8 directions)
+    int[,] mouvements = {
+            { -2, -1 }, { -2, 1 }, { -1, -2 }, { -1, 2 },
+            { 1, -2 }, { 1, 2 }, { 2, -1 }, { 2, 1 }
+        };
     public Cavalier(int[,] tableau, int ligne, int colonne, int couleur) : base(tableau, ligne, colonne, couleur)
     {
-        setSymbole('c');
+        setSymbole('C');
     }
 
     public override bool deplacer(int l, int c)
     {
 
-        int depx = l;
-        int depy = c;
+        int depx = l - getLigne();
+        int depy = c - getColonne();
+
+        int[,] deplacement = { { depx, depy } };
 
 
 
 
         //verifie mouvement L
-        if((depx == 2 && depy == 1)|| (depx == 1 && depy == 2))
+        if (tableauxIdentiques(mouvements, deplacement)){           
 
-
-        {
-            //verifier pos occuper
-            if (getTableau()[l,c]==0|| getTableau()[l, c] == (-1 * getCouleur()))
+            //verifier pos occuper                                                                                  
+            if (getTableau()[l, c] == 0)
             {
                 return true;
             }
-       
+
+            else if ((getTableau()[l, c] == (-1 * getCouleur()))) {              
+                return true;
+            }
             else
             {
-                Debug.LogError("Position occupée par une pièce de meme couleur");
+                return false;
             }
-            return false;
         }
-       
-
         else
-                {
-            Debug.LogError("Deplacement invalide");
+        {
+            Debug.LogError("Deplacement invalide"); 
         }
-        return false;
+        return false;    
+        
     }
+
 
     public override bool[,] isDanger(bool[,] danger)
     {
-        //possibilite des mouvements (8 directions)
-        int[,] mouvements = {
-            { -2, -1 }, { -2, 1 }, { -1, -2 }, { -1, 2 },
-            { 1, -2 }, { 1, 2 }, { 2, -1 }, { 2, 1 }
-        };
+        
 
 
         //parcour chaque directions
@@ -66,8 +70,27 @@ public class Cavalier : Piece
                 danger[nouveauL, nouveauC] = true;
             }
         }
-        return danger; // retourn le tebleau
+        return danger; // retourn le tebleau    
 
 
     }
+
+    //Methode pour vérifier si des coordonées sont égales (vecteurs identiques)
+    public bool tableauxIdentiques(int[,]ensembleDeplacement, int[,]deplacementEntre)
+    {
+        for (int i = 0; i < mouvements.GetLength(0); i++)
+        {
+            for (int j = 0; j < mouvements.GetLength(1); j++)
+            {
+                if (ensembleDeplacement[i, j] == deplacementEntre[0,0])
+                {
+                    return true;
+                }
+            }
+            
+        }
+        return false;
+    }
+
+                    
 }

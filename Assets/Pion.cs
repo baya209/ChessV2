@@ -18,7 +18,7 @@ public class Pion : Piece
             {
                 return true;
             }
-            else if (getTableau()[l, c+1] == 0 && getCouleur() == -1 && getColonne() == 7 && c == (getColonne() - 2)) // Pion noir qui avance de deux cases
+            else if (getTableau()[l, c+1] == 0 && getCouleur() == -1 && getColonne() == 6 && c == (getColonne() - 2)) // Pion noir qui avance de deux cases
             {
                 return true;
             }
@@ -27,7 +27,7 @@ public class Pion : Piece
         {
             if(l == (getLigne() + 1) || l == (getLigne() - 1) ) // verifie si le movement est decale sur la ligne
             {
-                if (c == (getColonne() + getCouleur()) )// Pion qui avance d'une case
+                if (c == (getColonne() + getCouleur()) )// Pion qui avance d'une case                       
                 {
                     return true;
                 }
