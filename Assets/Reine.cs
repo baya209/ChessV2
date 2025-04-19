@@ -108,7 +108,7 @@ public class Reine : Piece
             }
             else
             {
-                Debug.LogError("Trajectoire non valide pour la reine");  un déplacement de reine
+                Debug.LogError("Trajectoire non valide pour la reine"); // un déplacement de reine
             }
         }
         else
