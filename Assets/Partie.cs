@@ -83,15 +83,19 @@ public class Partie
                 if (piece.getCouleur() == 1)
                 {
                     piece.setEchec(plateau.getDangerBlanc());
+                   
                 }
                 else
                 {
                     piece.setEchec(plateau.getDangerNoir());
                 }
+             
+                
             }
         }
         if (plateau.getTableau()[li,ci] == couleur)
         {
+
             Piece deplace = plateau.getPieces().Find(p => p.getLigne() == li && p.getColonne() == ci);
             if ((special(li, ci, lf, cf, deplace)))
             {
@@ -137,13 +141,81 @@ public class Partie
         plateau.setDangerNoir(dangerNoir);
         plateau.setDangerBlanc(dangerBlanc);
     }
-    private bool castling(int li, int ci, int lf, int cf)
+    private bool castling(int li, int ci, int lf, int cf, Piece piece)
     {
+        Piece tour;
+        if (piece.isFixe())
+        {
+            if (li == 4 && ci == 0)
+            {
+                if (plateau.getTableau()[5, 0] == 0 && plateau.getTableau()[6, 0] == 0 && plateau.getTableau()[7,0]==1)
+                {
+                    tour = plateau.getPieces().Find(p => p.getLigne() == 7 && p.getColonne() == 0);
+                    if (tour is Tour && tour.isFixe())
+                    {
+                        plateau.getTableau()[4,0] = 0;
+                        plateau.getTableau()[7, 0] = 0;
+                        plateau.getTableau()[5, 0] = 1;
+                        plateau.getTableau()[6, 0] = 1;
+                        piece.setLigne(6);
+                        tour.setLigne(5);
+                        return true;
+                    }
+                }
+                else if (plateau.getTableau()[0, 0] == 1 && plateau.getTableau()[1, 0] == 0 && plateau.getTableau()[2, 0] == 0 && plateau.getTableau()[3, 0] == 0)
+                {
+                    tour = plateau.getPieces().Find(p => p.getLigne() == 0 && p.getColonne() == 0);
+                    if (tour is Tour && tour.isFixe())
+                    {
+                        plateau.getTableau()[4, 0] = 0;
+                        plateau.getTableau()[7, 0] = 0;
+                        plateau.getTableau()[5, 0] = 1;
+                        plateau.getTableau()[6, 0] = 1;
+                        piece.setLigne(1);
+                        tour.setLigne(2);
+                        return true;
+                    }
+                }
+            }
+            if (li == 4 && ci == 7)
+            {
+                if (plateau.getTableau()[5, 7] == 0 && plateau.getTableau()[6, 7] == 0 && plateau.getTableau()[7, 7] == -1)
+                {
+                    tour = plateau.getPieces().Find(p => p.getLigne() == 7 && p.getColonne() == 7);
+                    if (tour is Tour && tour.isFixe())
+                    {
+                        plateau.getTableau()[4, 7] = 0;
+                        plateau.getTableau()[7, 7] = 0;
+                        plateau.getTableau()[5, 7] = -1;
+                        plateau.getTableau()[6, 7] = -1;
+                        piece.setLigne(6);
+                        tour.setLigne(5);
+                        return true;
+                    }
+                }
+                else if (plateau.getTableau()[0, 7] == -1 && plateau.getTableau()[1, 7] == 0 && plateau.getTableau()[2, 7] == 0 && plateau.getTableau()[3, 7] == 0)
+                {
+                    tour = plateau.getPieces().Find(p => p.getLigne() == 0 && p.getColonne() == 7);
+                    if (tour is Tour && tour.isFixe())
+                    {
+                        plateau.getTableau()[4, 7] = 0;
+                        plateau.getTableau()[7, 7] = 0;
+                        plateau.getTableau()[5, 7] = -1;
+                        plateau.getTableau()[6, 7] = -1;
+                        piece.setLigne(1);
+                        tour.setLigne(2);
+                        return true;
+                    }
+                }
+            }
+        }
+        
         return false;
+
     }
     private bool special(int li, int ci, int lf, int cf, Piece piece)
     {
-        if(piece.GetType() == typeof(Pion))
+        if(piece is Pion)
         {
             if (piece.deplacer(lf,cf) && (cf == 7 || cf == 0)) {
                 plateau.getPieces().Add(new Tour(plateau.getTableau(), lf, cf, piece.getCouleur()));//
@@ -151,6 +223,12 @@ public class Partie
                 return true;
             }
         } 
+        if(piece is Roi)
+        {
+            if (castling(li, ci, lf, cf, piece)) { 
+               return true;
+            }
+        }
         return false;
     }
 
