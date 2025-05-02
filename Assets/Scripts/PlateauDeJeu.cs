@@ -1,17 +1,22 @@
 
 using UnityEngine;
 
-public class Jeu : MonoBehaviour
+public class PlateuDeJeu : MonoBehaviour
 {
+  
     private GameObject[,] plateauJeu;
     private const int TAILLE_X = 8;
     private const int TAILLE_Y = 8;
+    [Header("material")]
+    [SerializeField] private Material material;
+
 
 
 
     private void Awake()
     {
         creerPlateauJeu(1, TAILLE_X, TAILLE_Y);
+
     }
 
 
@@ -39,7 +44,7 @@ public class Jeu : MonoBehaviour
         // creation d'un contenant pour le 3d 
         Mesh mesh = new Mesh();
         cases.AddComponent<MeshFilter>().mesh = mesh;
-        cases.AddComponent<MeshRenderer>();
+        cases.AddComponent<MeshRenderer>().material = material;
         
 
         // car notre rectangle pour la case a 4 cotes
@@ -53,6 +58,8 @@ public class Jeu : MonoBehaviour
         int[] rectangle = new int[6] { 0, 2, 1, 1, 2, 3 };
         mesh.vertices = vecteur;
         mesh.triangles = rectangle;
+        mesh.RecalculateNormals();
+
 
         cases.AddComponent<BoxCollider>();
 
@@ -60,4 +67,7 @@ public class Jeu : MonoBehaviour
 
         return cases;
     }
+    
+    
+    
 }
