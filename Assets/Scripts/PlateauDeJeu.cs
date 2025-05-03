@@ -7,21 +7,30 @@ public class PlateuDeJeu : MonoBehaviour
     private GameObject[,] plateauJeu;
     private const int TAILLE_X = 8;
     private const int TAILLE_Y = 8;
+    private Vector3 bonds;
+
     [Header("material")]
     [SerializeField] private Material material;
+    [SerializeField] private float taillesX = 10f;
+    [SerializeField] private float taillesY = 0.15f;
+    [SerializeField] private Vector3 vec = Vector3.zero;
+
+
 
 
 
 
     private void Awake()
     {
-        creerPlateauJeu(1, TAILLE_X, TAILLE_Y);
+        creerPlateauJeu(taillesX, TAILLE_X, TAILLE_Y);
 
     }
 
 
     private void creerPlateauJeu(float taille , int tailleX, int tailleY)
     {
+        taillesY += transform.position.y;
+        bonds = new Vector3((tailleX / 2) * taille, 0, (tailleX / 2) * taille) + vec;
         plateauJeu = new GameObject[tailleX, tailleY];
 
         for (int i = 0; i < tailleX; i++)
@@ -50,14 +59,15 @@ public class PlateuDeJeu : MonoBehaviour
         // car notre rectangle pour la case a 4 cotes
 
         Vector3[] vecteur = new Vector3[4];
-        vecteur[0] = new Vector3(i * taille, 0, j * taille);         // coin bas gauche
-        vecteur[1] = new Vector3((i + 1) * taille, 0, j * taille);   // coin bas droit
-        vecteur[2] = new Vector3(i * taille, 0, (j + 1) * taille);   // coin haut gauche
-        vecteur[3] = new Vector3((i + 1) * taille, 0, (j + 1) * taille); // coin haut droit
+        vecteur[0] = new Vector3(i * taille, taillesY, j * taille) - bonds;        // coin bas gauche
+        vecteur[1] = new Vector3((i + 1) * taille, taillesY, j * taille) - bonds;   // coin bas droit
+        vecteur[2] = new Vector3(i * taille, taillesY, (j + 1) * taille) - bonds;   // coin haut gauche
+        vecteur[3] = new Vector3((i + 1) * taille, taillesY, (j + 1) * taille) - bonds; // coin haut droit
 
         int[] rectangle = new int[6] { 0, 2, 1, 1, 2, 3 };
         mesh.vertices = vecteur;
         mesh.triangles = rectangle;
+
         mesh.RecalculateNormals();
 
 
