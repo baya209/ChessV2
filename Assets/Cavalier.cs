@@ -13,6 +13,7 @@ public class Cavalier : Piece
     public Cavalier(int[,] tableau, int ligne, int colonne, int couleur) : base(tableau, ligne, colonne, couleur)
     {
         setSymbole('C');
+        setValeur(300);
     }
 
     public override bool deplacer(int l, int c)

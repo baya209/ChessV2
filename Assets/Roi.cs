@@ -7,6 +7,8 @@ public class Roi : Piece
     public Roi(int[,] tableau, int ligne, int colonne, int couleur) : base(tableau, ligne, colonne, couleur)
     {
         setSymbole('R');
+        setValeur(10000);
+
     }
     public override bool deplacer(int l, int c)
     {
@@ -124,6 +126,10 @@ public class Roi : Piece
         }
 
         return coups;
+    }
+    public override Piece Cloner()
+    {
+        return new Roi((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
     }
 
 

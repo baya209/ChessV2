@@ -7,6 +7,7 @@ public class Fou : Piece
     public Fou(int[,] tableau, int ligne, int colonne, int couleur) : base(tableau, ligne, colonne, couleur)
     {
         setSymbole('F');
+        setValeur(350);
     }
 
     public override bool deplacer(int l, int c)

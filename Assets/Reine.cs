@@ -7,6 +7,7 @@ public class Reine : Piece
     public Reine(int[,] tableau, int ligne, int colonne, int couleur) : base(tableau, ligne, colonne, couleur)
     {
         setSymbole('D');
+        setValeur(1000);
     }
 
     public override bool deplacer(int l, int c) 

@@ -8,6 +8,7 @@ public class Tour : Piece
     public Tour(int[,] tableau, int ligne, int colonne, int couleur) : base(tableau, ligne, colonne, couleur) 
     {
         setSymbole('T');
+        setValeur(500);
     }
     public override bool deplacer(int l, int c)
     {
