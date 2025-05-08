@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public abstract class Piece 
 {
@@ -74,6 +75,7 @@ public abstract class Piece
     {
         this.symbole = symbole;
     }
+    public abstract Piece Cloner();
 
-
+    public abstract List<Coup> GenererCoupsPossibles(Plateau plateau);
 }

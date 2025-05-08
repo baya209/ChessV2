@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+
 public class Pion : Piece
 {
     public Pion(int[,] tableau, int ligne, int colonne, int couleur) : base(tableau, ligne, colonne, couleur)
@@ -70,5 +72,51 @@ public class Pion : Piece
         }
         return danger;
 
+    }
+    public override List<Coup> GenererCoupsPossibles(Plateau plateau)
+    {
+        List<Coup> coups = new List<Coup>();
+        int[,] t = getTableau();
+        int ligne = getLigne();
+        int colonne = getColonne();
+        int couleur = getCouleur();
+
+        int direction = -couleur; // blanc avance vers le haut (direction = -1), noir vers le bas (+1)
+        int ligneAvant = ligne + direction;
+
+        // Mouvement de 1 case vers l'avant
+        if (ligneAvant >= 0 && ligneAvant < 8 && t[ligneAvant, colonne] == 0)
+        {
+            coups.Add(new Coup(ligne, colonne, ligneAvant, colonne, -1));
+
+            // Mouvement de 2 cases depuis la ligne de départ si la 2e case est libre aussi
+            int ligneDepart = (couleur == 1) ? 6 : 1;
+            int ligneDeux = ligne + 2 * direction;
+
+            if (ligne == ligneDepart && ligneDeux >= 0 && ligneDeux < 8 && t[ligneDeux, colonne] == 0)
+            {
+                coups.Add(new Coup(ligne, colonne, ligneDeux, colonne, -1));
+            }
+        }
+
+        // Captures diagonales (avant gauche et avant droite)
+        for (int dc = -1; dc <= 1; dc += 2)
+        {
+            int c = colonne + dc;
+            if (c >= 0 && c < 8 && ligneAvant >= 0 && ligneAvant < 8)
+            {
+                int cible = t[ligneAvant, c];
+                if (cible != 0 && cible != couleur)
+                {
+                    coups.Add(new Coup(ligne, colonne, ligneAvant, c, cible));
+                }
+            }
+        }
+
+        return coups;
+    }
+    public override Piece Cloner()
+    {
+        return new Pion((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
     }
 }

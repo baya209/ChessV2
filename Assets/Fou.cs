@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Fou : Piece
@@ -86,5 +87,60 @@ public class Fou : Piece
     {
         return danger;
     }
+    public override List<Coup> GenererCoupsPossibles(Plateau plateau)
+    {
+        List<Coup> coups = new List<Coup>();
+        int[,] t = getTableau();
+        int ligne = getLigne();
+        int colonne = getColonne();
+        int couleur = getCouleur();
 
+        // 4 directions diagonales
+        int[][] directions = new int[][]
+        {
+        new int[] { 1, 1 },   // bas droite
+        new int[] { 1, -1 },  // bas gauche
+        new int[] { -1, 1 },  // haut droite
+        new int[] { -1, -1 }  // haut gauche
+        };
+
+        foreach (int[] dir in directions)
+        {
+            int l = ligne + dir[0];
+            int c = colonne + dir[1];
+
+            while (l >= 0 && l < 8 && c >= 0 && c < 8)
+            {
+                int cible = t[l, c];
+
+                if (cible == 0)
+                {
+                    // Case vide → déplacement simple
+                    coups.Add(new Coup(ligne, colonne, l, c, -1));
+                }
+                else if (cible != couleur)
+                {
+                    // Pièce ennemie → capture
+                    coups.Add(new Coup(ligne, colonne, l, c, cible));
+                    break;
+                }
+                else
+                {
+                    // Pièce alliée → bloqué
+                    break;
+                }
+
+                // Continue dans la même direction
+                l += dir[0];
+                c += dir[1];
+            }
+        }
+
+        return coups;
+    }
+
+    public override Piece Cloner()
+    {
+        return new Fou((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
+    }
 }

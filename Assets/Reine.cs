@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Reine : Piece
@@ -159,6 +160,8 @@ public class Reine : Piece
 
 
 
+ 
+
         /** 
          * ------ Ancien code --------
 
@@ -278,4 +281,66 @@ public class Reine : Piece
         return danger;
     }
 
+
+    public override List<Coup> GenererCoupsPossibles(Plateau plateau)
+    {
+        List<Coup> coups = new List<Coup>();
+        int[,] t = getTableau();
+        int ligne = getLigne();
+        int colonne = getColonne();
+        int couleur = getCouleur();
+
+        // La reine se déplace dans 8 directions (horizontal, vertical, diagonal)
+        int[][] directions = new int[][]
+        {
+        new int[] { 1, 0 },   // bas
+        new int[] { -1, 0 },  // haut
+        new int[] { 0, 1 },   // droite
+        new int[] { 0, -1 },  // gauche
+        new int[] { 1, 1 },   // bas droite
+        new int[] { 1, -1 },  // bas gauche
+        new int[] { -1, 1 },  // haut droite
+        new int[] { -1, -1 }  // haut gauche
+        };
+
+        // Parcours chaque direction
+        foreach (int[] dir in directions)
+        {
+            int l = ligne + dir[0];
+            int c = colonne + dir[1];
+
+            // Tant qu'on reste dans l'échiquier
+            while (l >= 0 && l < 8 && c >= 0 && c < 8)
+            {
+                int cible = t[l, c];
+
+                if (cible == 0)
+                {
+                    // Case vide → déplacement simple
+                    coups.Add(new Coup(ligne, colonne, l, c, -1));
+                }
+                else if (cible != couleur)
+                {
+                    // Pièce ennemie → capture possible
+                    coups.Add(new Coup(ligne, colonne, l, c, cible));
+                    break; // on ne peut pas sauter par-dessus une pièce
+                }
+                else
+                {
+                    // Pièce alliée → bloqué
+                    break;
+                }
+
+                // Avancer dans la même direction
+                l += dir[0];
+                c += dir[1];
+            }
+        }
+
+        return coups;
+    }
+    public override Piece Cloner()
+    {
+        return new Reine((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
+    }
 }

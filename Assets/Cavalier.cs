@@ -92,5 +92,48 @@ public class Cavalier : Piece
         return false;
     }
 
-                    
+    public override List<Coup> GenererCoupsPossibles(Plateau plateau)
+    {
+        List<Coup> coups = new List<Coup>();
+        int[,] t = getTableau();
+        int ligne = getLigne();
+        int colonne = getColonne();
+        int couleur = getCouleur();
+
+        // 8 positions possibles en "L"
+        int[][] mouvements = new int[][]
+        {
+        new int[] { 2, 1 },
+        new int[] { 2, -1 },
+        new int[] { -2, 1 },
+        new int[] { -2, -1 },
+        new int[] { 1, 2 },
+        new int[] { 1, -2 },
+        new int[] { -1, 2 },
+        new int[] { -1, -2 }
+        };
+
+        foreach (int[] m in mouvements)
+        {
+            int l = ligne + m[0];
+            int c = colonne + m[1];
+
+            if (l >= 0 && l < 8 && c >= 0 && c < 8)
+            {
+                int cible = t[l, c];
+
+                if (cible == 0 || cible != couleur)
+                {
+                    int pieceCapturee = (cible == 0) ? -1 : cible;
+                    coups.Add(new Coup(ligne, colonne, l, c, pieceCapturee));
+                }
+            }
+        }
+
+        return coups;
+    }
+    public override Piece Cloner()
+    {
+        return new Cavalier((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
+    }
 }
