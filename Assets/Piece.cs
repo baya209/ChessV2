@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+
 public abstract class Piece 
 {
     private int colonne; // exemple la reine blanche est a la position au depart (3,0)
@@ -21,6 +23,7 @@ public abstract class Piece
     {
         this.tableau = tableau;
     }
+
 
     public abstract bool deplacer(int l, int c);
     public int getColonne() {
@@ -72,5 +75,6 @@ public abstract class Piece
         this.symbole = symbole;
     }
     
+
 
 }
