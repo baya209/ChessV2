@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using UnityEngine;
+
 
 
 
@@ -268,4 +268,5 @@ public class Partie
         return final;
         
     }
-}
+    public void evaluer
+    

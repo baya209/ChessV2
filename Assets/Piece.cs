@@ -71,5 +71,6 @@ public abstract class Piece
     {
         this.symbole = symbole;
     }
+    
 
 }
