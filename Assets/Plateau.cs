@@ -125,7 +125,7 @@ public class Plateau
 
         return copie;
     }
-
+    /*
     public int EvaluerPlateau(int couleur)
     {
         int score = 0;
@@ -140,5 +140,5 @@ public class Plateau
         // Ajuster le score selon la couleur qui joue
         return score * couleur;
     }
-
+    */
 }

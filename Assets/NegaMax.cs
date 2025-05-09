@@ -15,6 +15,8 @@ public class NewMonoBehaviourScript
     * roi = 10 000
     * pour piece noir -> mettre valeur en negatif
     * */
+
+    //pour le controle du centre 
     int[,] bonusCentre = {
     { 0, 0, 1, 2, 2, 1, 0, 0 },
     { 0, 1, 2, 3, 3, 2, 1, 0 },
@@ -26,20 +28,19 @@ public class NewMonoBehaviourScript
     { 0, 0, 1, 2, 2, 1, 0, 0 }
     };
 
-    public int profondeurMax = 3;
+    public static int profondeurMax = 3;
 
     //regarde recursivement chaque coup
     public int NegaMax(Plateau plateau, int profondeur, int alpha, int beta, int couleur)
     {
         if (profondeur == 0) //si a la fin on retourne un score
-            return plateau.EvaluerPlateau(couleur);
+            return EvaluerEchiquier(plateau, couleur);
 
         int meilleurScore = int.MinValue;
         List<Coup> coups = plateau.GenererTousLesCoups(couleur); //genere tout selon la couleur
 
         if (coups.Count == 0)// aucune option et
-            return plateau.EvaluerPlateau(couleur); 
-
+            return EvaluerEchiquier(plateau, couleur);
         foreach (Coup coup in coups)
         {
             Plateau copie = plateau.CopierPlateau();
@@ -79,6 +80,9 @@ public class NewMonoBehaviourScript
 
         return meilleurCoup;
     }
+    
+    
+
 
     public int EvaluerEchiquier(Plateau plateau, int couleur)
     {
@@ -100,7 +104,7 @@ public class NewMonoBehaviourScript
             {
                 int bonus = bonusCentre[ligne, colonne];
 
-                // Si c'est un roi, on enlève le bonus sauf en finale (à affiner)
+                // Si c'est un roi, on enlève le bonus sauf en finale a travailler 
                 if (piece is Roi)
                     bonus = -bonus;
 
@@ -140,6 +144,8 @@ public class NewMonoBehaviourScript
                 if (estPionAvance)
                     score += (pieceCouleur == couleur) ? 30 : -30;
             }
+
+
         }
 
         return score;
