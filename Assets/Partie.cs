@@ -74,6 +74,10 @@ public class Partie
     
     public bool jouerCoup(int li, int ci, int lf,int cf, int couleur)
     {
+        if (li < 0 || lf < 0 || cf < 0 || ci < 0 || li > 7 || lf > 7 || ci > 7 || cf > 7) { 
+        
+        return false;
+        }
         
         evaluerDanger();
         foreach (var piece in plateau.getPieces())
@@ -91,6 +95,7 @@ public class Partie
                 }
              
                 
+        
             }
         }
         if (plateau.getTableau()[li,ci] == couleur)
@@ -167,10 +172,14 @@ public class Partie
                     tour = plateau.getPieces().Find(p => p.getLigne() == 0 && p.getColonne() == 0);
                     if (tour is Tour && tour.isFixe())
                     {
+                        
+                        plateau.getTableau()[0, 0] = 0;
                         plateau.getTableau()[4, 0] = 0;
                         plateau.getTableau()[7, 0] = 0;
                         plateau.getTableau()[5, 0] = 1;
                         plateau.getTableau()[6, 0] = 1;
+                        plateau.getTableau()[1, 0] = 1;
+                        plateau.getTableau()[2, 0] = 1;
                         piece.setLigne(1);
                         tour.setLigne(2);
                         return true;
@@ -198,10 +207,13 @@ public class Partie
                     tour = plateau.getPieces().Find(p => p.getLigne() == 0 && p.getColonne() == 7);
                     if (tour is Tour && tour.isFixe())
                     {
+                        plateau.getTableau()[0, 7] = 0;
                         plateau.getTableau()[4, 7] = 0;
                         plateau.getTableau()[7, 7] = 0;
                         plateau.getTableau()[5, 7] = -1;
                         plateau.getTableau()[6, 7] = -1;
+                        plateau.getTableau()[2, 7] = -1;
+                        plateau.getTableau()[1, 7] = -1;
                         piece.setLigne(1);
                         tour.setLigne(2);
                         return true;
@@ -217,18 +229,67 @@ public class Partie
     {
         if(piece is Pion)
         {
+            if(enPassant( li,  ci,  lf,  cf, piece))
+            {
+                return true;
+            }
             if (piece.deplacer(lf,cf) && (cf == 7 || cf == 0)) {
+                
                 plateau.getPieces().Add(new Tour(plateau.getTableau(), lf, cf, piece.getCouleur()));//
                 plateau.getPieces().Remove(piece);
                 return true;
             }
+            
         } 
         if(piece is Roi)
+        else if(piece is Roi)
         {
             if (castling(li, ci, lf, cf, piece)) { 
                return true;
             }
         }
+        return false;
+    }
+    public bool enPassant(int li, int ci, int lf, int cf, Piece piece)
+    {
+        if (plateau.getTableau()[lf,cf] != 0) {  return false; }    
+        if (plateau.getTableau()[li, cf] == -1*piece.getCouleur()) {
+            Pion pion = plateau.getPieces().Find(p => p.getLigne() == li && p.getColonne() == cf) as Pion; 
+            if(piece.getCouleur() == 1)
+            {
+                if (li == 4 && lf == 5 && ((cf == ci + 1 ) || (cf == ci - 1 )))
+                {
+                    if (pion.getNbreDeplacement() == 1)
+                    {
+                        plateau.getTableau()[lf, cf] = 1;
+                        plateau.getTableau()[li, cf] = 0;
+                        piece.setLigne(lf);
+                        piece.setColonne(cf);
+                        plateau.getPieces().Remove(pion);
+                        return true;
+                    }
+                    
+                }
+            }
+            else if (piece.getCouleur() == -1)
+            {
+                if (li == 3 && lf == 2 && ((cf == ci + 1) || (cf == ci - 1)))
+                {
+                    if (pion.getNbreDeplacement() == 1)
+                    {
+                        plateau.getTableau()[lf, cf] = -1;
+                        plateau.getTableau()[li, cf] = 0;
+                        piece.setLigne(lf);
+                        piece.setColonne(cf);
+                        plateau.getPieces().Remove(pion);
+                        return true;
+                    }
+
+                }
+            }
+            
+        }
+
         return false;
     }
 
@@ -267,5 +328,10 @@ public class Partie
         }
         return final;
         
+    }
+    
+    public void choisir()
+    {
+
     }
 }

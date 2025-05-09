@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class Pion : Piece
 {
+    private int nbreDeplacement = 0;
     public Pion(int[,] tableau, int ligne, int colonne, int couleur) : base(tableau, ligne, colonne, couleur)
     {
         setSymbole('P');
@@ -15,14 +16,17 @@ public class Pion : Piece
         {
             if (c == (getColonne() + getCouleur()) && l == getLigne())// Pion qui avance d'une case
             {
+                nbreDeplacement ++;
                 return true;
             }
             else if(getTableau()[l, c - 1] == 0&& (c == (getColonne() + 2) && (getCouleur() == 1 && getColonne() == 1)))// Pion blanc qui avance de deux cases  
             {
+                nbreDeplacement++;
                 return true;
             }
             else if (getTableau()[l, c+1] == 0 && getCouleur() == -1 && getColonne() == 6 && c == (getColonne() - 2)) // Pion noir qui avance de deux cases
             {
+                nbreDeplacement++;
                 return true;
             }
         }
@@ -119,5 +123,10 @@ public class Pion : Piece
     public override Piece Cloner()
     {
         return new Pion((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
+        return new Pion((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur()); 
+    }
+    public int getNbreDeplacement()
+        return nbreDeplacement;
+
     }
 }
