@@ -291,7 +291,7 @@ public class Reine : Piece
         int colonne = getColonne();
         int couleur = getCouleur();
 
-        // La reine se déplace dans 8 directions (horizontal, vertical, diagonal)
+        //  8 directions (horizontal, vertical, diagonal)
         int[][] directions = new int[][]
         {
         new int[] { 1, 0 },   // bas
@@ -310,25 +310,25 @@ public class Reine : Piece
             int l = ligne + dir[0];
             int c = colonne + dir[1];
 
-            // Tant qu'on reste dans l'échiquier
+            // limite du plateau
             while (l >= 0 && l < 8 && c >= 0 && c < 8)
             {
                 int cible = t[l, c];
 
                 if (cible == 0)
                 {
-                    // Case vide → déplacement simple
+                    // Case vide 
                     coups.Add(new Coup(ligne, colonne, l, c, -1));
                 }
                 else if (cible != couleur)
                 {
-                    // Pièce ennemie → capture possible
+                    // Pièce ennemie
                     coups.Add(new Coup(ligne, colonne, l, c, cible));
                     break; // on ne peut pas sauter par-dessus une pièce
                 }
                 else
                 {
-                    // Pièce alliée → bloqué
+                    // Pièce alliée 
                     break;
                 }
 

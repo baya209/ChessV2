@@ -128,7 +128,7 @@ public class Tour : Piece
         int colonne = getColonne();
         int couleur = getCouleur();
 
-        // 4 directions : haut, bas, gauche, droite
+        // 4 directions
         int[][] directions = new int[][]
         {
         new int[] { -1, 0 }, // haut
@@ -148,18 +148,18 @@ public class Tour : Piece
 
                 if (cible == 0)
                 {
-                    // Case vide → déplacement simple
+                    // Case vide
                     coups.Add(new Coup(ligne, colonne, l, c, -1));
                 }
                 else if (cible != couleur)
                 {
-                    // Pièce ennemie → capture
+                    // Pièce ennemie
                     coups.Add(new Coup(ligne, colonne, l, c, cible));
                     break;
                 }
                 else
                 {
-                    // Pièce alliée → bloqué
+                    // Pièce alliée 
                     break;
                 }
 

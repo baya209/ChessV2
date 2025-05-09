@@ -85,37 +85,32 @@ public class Roi : Piece
 
     public override List<Coup> GenererCoupsPossibles(Plateau plateau)
     {
-        // Liste pour stocker tous les coups possibles du roi
+        
         List<Coup> coups = new List<Coup>();
 
-        // Récupère l'état du plateau, la position actuelle du roi et sa couleur
+       
         int[,] t = getTableau();
         int ligne = getLigne();
         int colonne = getColonne();
         int couleur = getCouleur();
 
-        // Parcourt toutes les directions possibles autour du roi (8 cases autour)
         for (int dl = -1; dl <= 1; dl++)
         {
             for (int dc = -1; dc <= 1; dc++)
             {
-                if (dl == 0 && dc == 0) continue; // Ignore la case actuelle (ne pas rester sur place)
+                if (dl == 0 && dc == 0) continue; // ne pas rester sur place
 
                 int l = ligne + dl; // ligne cible
                 int c = colonne + dc; // colonne cible
 
-                // Vérifie que la case cible est dans les limites de l'échiquier
+               
                 if (l >= 0 && l < 8 && c >= 0 && c < 8)
                 {
                     int cible = t[l, c]; // Valeur de la case cible : 0 = vide, 1 ou -1 = pièce
 
-                    // Le roi peut se déplacer si :
-                    // - la case est vide (cible == 0)
-                    // - ou contient une pièce ennemie (cible != couleur)
                     if (cible == 0 || cible != couleur)
                     {
-                        // Si la case est vide, on indique qu'il n'y a pas de pièce capturée
-                        // Sinon, on garde la valeur de la pièce capturée
+                       //piece capturee = valeur de la piece
                         int pieceCapturee = (cible == 0) ? -1 : cible;
 
                         // Ajoute le coup à la liste

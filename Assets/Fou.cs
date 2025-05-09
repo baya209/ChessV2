@@ -96,7 +96,7 @@ public class Fou : Piece
         int colonne = getColonne();
         int couleur = getCouleur();
 
-        // 4 directions diagonales
+        //  diagonales
         int[][] directions = new int[][]
         {
         new int[] { 1, 1 },   // bas droite
@@ -116,18 +116,18 @@ public class Fou : Piece
 
                 if (cible == 0)
                 {
-                    // Case vide → déplacement simple
+                    // Case vide 
                     coups.Add(new Coup(ligne, colonne, l, c, -1));
                 }
                 else if (cible != couleur)
                 {
-                    // Pièce ennemie → capture
+                    // Pièce ennemie = capture
                     coups.Add(new Coup(ligne, colonne, l, c, cible));
                     break;
                 }
                 else
                 {
-                    // Pièce alliée → bloqué
+                    // Pièce alliée = pas passer
                     break;
                 }
 

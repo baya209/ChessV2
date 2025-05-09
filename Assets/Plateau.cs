@@ -77,7 +77,7 @@ public class Plateau
 
     public void JouerCoupIA(Coup coup)
     {
-        // 1. Trouver la pièce à déplacer
+        // piece a deplacer
         Piece pieceAJouer = pieces.Find(p => p.getLigne() == coup.li && p.getColonne() == coup.ci);
         if (pieceAJouer == null)
         {
@@ -85,40 +85,40 @@ public class Plateau
             return;
         }
 
-        // 2. Supprimer la pièce adverse si présente
+        // supprime piece adverse
         Piece pieceCapturee = pieces.Find(p => p.getLigne() == coup.lf && p.getColonne() == coup.cf);
         if (pieceCapturee != null)
         {
             pieces.Remove(pieceCapturee);
         }
 
-        // 3. Mettre à jour le tableau
+        // nouveau tab
         tableau[coup.lf, coup.cf] = tableau[coup.li, coup.ci];
         tableau[coup.li, coup.ci] = 0;
 
-        // 4. Mettre à jour la pièce
+        //nouvelle piece
         pieceAJouer.setLigne(coup.lf);
         pieceAJouer.setColonne(coup.cf);
         pieceAJouer.setFixe(); // utile pour roque
     }
     public Plateau CopierPlateau()
     {
-        // 1. Copier le tableau (copie profonde)
+        //  Copier le tableau 
         int[,] tableauCopie = new int[8, 8];
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++)
                 tableauCopie[i, j] = this.tableau[i, j];
 
-        // 2. Copier les pièces
+        //  Copier les pièces
         List<Piece> piecesCopiees = new List<Piece>();
         foreach (Piece p in this.pieces)
         {
             Piece clone = p.Cloner();              // Cloner la pièce
-            clone.setTableau(tableauCopie);        // Très important : tableau mis à jour
+            clone.setTableau(tableauCopie);        // tableau mis à jour
             piecesCopiees.Add(clone);
         }
 
-        // 3. Créer le nouveau plateau
+        // Créer le nouveau plateau
         Plateau copie = new Plateau(tableauCopie, piecesCopiees);
 
        
@@ -126,5 +126,19 @@ public class Plateau
         return copie;
     }
 
+    public int EvaluerPlateau(int couleur)
+    {
+        int score = 0;
+
+        foreach (Piece piece in pieces)
+        {
+            
+            // pour savoir le tour
+            score += piece.getValeur() * piece.getCouleur();
+        }
+
+        // Ajuster le score selon la couleur qui joue
+        return score * couleur;
+    }
 
 }
