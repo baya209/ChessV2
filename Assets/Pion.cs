@@ -78,6 +78,7 @@ public class Pion : Piece
         return danger;
 
     }
+
     public override List<Coup> GenererCoupsPossibles(Plateau plateau)
     {
         List<Coup> coups = new List<Coup>();
@@ -122,10 +123,10 @@ public class Pion : Piece
     }
     public override Piece Cloner()
     {
-        return new Pion((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
         return new Pion((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur()); 
     }
     public int getNbreDeplacement()
+    {
         return nbreDeplacement;
 
     }

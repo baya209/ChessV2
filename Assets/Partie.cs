@@ -94,7 +94,6 @@ public class Partie
                     piece.setEchec(plateau.getDangerNoir());
                 }
              
-                
         
             }
         }
@@ -175,9 +174,6 @@ public class Partie
                         
                         plateau.getTableau()[0, 0] = 0;
                         plateau.getTableau()[4, 0] = 0;
-                        plateau.getTableau()[7, 0] = 0;
-                        plateau.getTableau()[5, 0] = 1;
-                        plateau.getTableau()[6, 0] = 1;
                         plateau.getTableau()[1, 0] = 1;
                         plateau.getTableau()[2, 0] = 1;
                         piece.setLigne(1);
@@ -209,9 +205,6 @@ public class Partie
                     {
                         plateau.getTableau()[0, 7] = 0;
                         plateau.getTableau()[4, 7] = 0;
-                        plateau.getTableau()[7, 7] = 0;
-                        plateau.getTableau()[5, 7] = -1;
-                        plateau.getTableau()[6, 7] = -1;
                         plateau.getTableau()[2, 7] = -1;
                         plateau.getTableau()[1, 7] = -1;
                         piece.setLigne(1);
@@ -241,7 +234,6 @@ public class Partie
             }
             
         } 
-        if(piece is Roi)
         else if(piece is Roi)
         {
             if (castling(li, ci, lf, cf, piece)) { 
