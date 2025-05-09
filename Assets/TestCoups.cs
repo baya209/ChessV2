@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestCoups : MonoBehaviour
 {
-    void Start()
+   /* void Start()
     {
         // Crée un échiquier vide
         int[,] tableau = new int[8, 8];
@@ -27,5 +27,5 @@ public class TestCoups : MonoBehaviour
         {
             Debug.Log($"Pion : ({coup.li},{coup.ci}) → ({coup.lf},{coup.cf}) Capture: {coup.pieceCapturee}");
         }
-    }
+    }*/
 }
