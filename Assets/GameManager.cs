@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public Text echiquier;
     Partie partie = new Partie();
+
     public InputField fli;
     public string li;
     public string ci;
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      
+        partie.creerPartie();
         echiquier.text = partie.afficher();
     }
   
