@@ -7,7 +7,7 @@ public class Partie
 {
     public Partie()
     {
-        creerPartie();
+        
     }
     private Plateau plateau;
     public void creerPartie()
@@ -326,4 +326,9 @@ public class Partie
     {
 
     }
+    public void setPlateau(Plateau plateau)
+    {
+        this.plateau = plateau;
+    }
+    public Plateau getPlateau() { return this.plateau; }
 }
