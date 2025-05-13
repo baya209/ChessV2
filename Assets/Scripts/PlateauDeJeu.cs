@@ -10,15 +10,15 @@ public class PlateuDeJeu : MonoBehaviour
     private Vector3 bonds;
 
     [Header("material")]
-    [SerializeField] private Material material;
+    [SerializeField] private Material materialDeLaCase;
     [SerializeField] private float taillesX = 10f;
     [SerializeField] private float taillesY = 0.15f;
     [SerializeField] private Vector3 vec = Vector3.zero;
 
-
-
-
-
+    [Header("Prefabs et material")]
+    [SerializeField] private GameObject[] prefabs;
+    [SerializeField] private Material[] materialDeLequipe;
+       
 
     private void Awake()
     {
@@ -53,7 +53,7 @@ public class PlateuDeJeu : MonoBehaviour
         // creation d'un contenant pour le 3d 
         Mesh mesh = new Mesh();
         cases.AddComponent<MeshFilter>().mesh = mesh;
-        cases.AddComponent<MeshRenderer>().material = material;
+        cases.AddComponent<MeshRenderer>().material = materialDeLaCase;
         
 
         // car notre rectangle pour la case a 4 cotes
@@ -77,6 +77,25 @@ public class PlateuDeJeu : MonoBehaviour
 
         return cases;
     }
+
+
+    // generation des pieces 
+    public void genererToutesLesPieces3D()
+    {
+
+    }
+
+
+    // genere qu'une seule piece
+
+    public void genererUneSeulePiece3D(TypePiece pieceType, int team)
+    {
+
+
+
+    }
+
+
     
     
     

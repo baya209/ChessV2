@@ -11,8 +11,8 @@ public class Case
 
     public Case(int posX, int posY)
     {
-        posX = posX;
-        posY = posY;
+        this.posX = posX;
+        this.posY = posY;
 
 
     }
