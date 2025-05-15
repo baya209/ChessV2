@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewMonoBehaviourScript
+public class NegaMaxIA
 {
 
     /* 
@@ -30,46 +30,21 @@ public class NewMonoBehaviourScript
 
     public static int profondeurMax = 3;
 
-    //regarde recursivement chaque coup
-    public int NegaMax(Plateau plateau, int profondeur, int alpha, int beta, int couleur)
+    public Coup SuggérerCoup(Partie partie, int couleur)
     {
-        if (profondeur == 0) //si a la fin on retourne un score
-            return EvaluerEchiquier(plateau, couleur);
-
-        int meilleurScore = int.MinValue;
-        List<Coup> coups = plateau.GenererTousLesCoups(couleur); //genere tout selon la couleur
-
-        if (coups.Count == 0)// aucune option et
-            return EvaluerEchiquier(plateau, couleur);
-        foreach (Coup coup in coups)
-        {
-            Plateau copie = plateau.CopierPlateau();
-            copie.JouerCoupIA(coup);//joue sur la copie
-            int score = -NegaMax(copie, profondeur - 1, -beta, -alpha, -couleur);
-
-            if (score > meilleurScore)
-                meilleurScore = score;
-
-            alpha = Math.Max(alpha, score);
-            if (alpha >= beta)
-                break; // coupure
-        }
-
-        return meilleurScore;
-    }
-
-    //choisi coups final a joueur a utilise pour UNITY
-    public Coup SuggérerCoup(Plateau plateau, int couleur)
-    {
-        List<Coup> coups = plateau.GenererTousLesCoups(couleur);
+        List<Coup> coups = partie.getPlateau().GenererTousLesCoups(couleur);
         int meilleurScore = int.MinValue;
         Coup meilleurCoup = null;
 
         foreach (Coup coup in coups)
         {
-            Plateau copie = plateau.CopierPlateau();
-            copie.JouerCoupIA(coup);
-            int score = -NegaMax(copie, profondeurMax - 1, int.MinValue, int.MaxValue, -couleur);
+            Partie simulation = new Partie();
+            simulation.setPlateau(partie.getPlateau().CopierPlateau());
+
+            bool coupValide = simulation.jouerCoup(coup.li, coup.ci, coup.lf, coup.cf, couleur);
+            if (!coupValide) continue;
+
+            int score = -NegaMax(simulation, profondeurMax - 1, int.MinValue, int.MaxValue, -couleur);
 
             if (score > meilleurScore || meilleurCoup == null)
             {
@@ -80,6 +55,39 @@ public class NewMonoBehaviourScript
 
         return meilleurCoup;
     }
+
+    private int NegaMax(Partie partie, int profondeur, int alpha, int beta, int couleur)
+    {
+        if (profondeur == 0)
+            return EvaluerEchiquier(partie.getPlateau(), couleur);
+
+        int meilleurScore = int.MinValue;
+        List<Coup> coups = partie.getPlateau().GenererTousLesCoups(couleur);
+
+        if (coups.Count == 0)
+            return EvaluerEchiquier(partie.getPlateau(), couleur);
+
+        foreach (Coup coup in coups)
+        {
+            Partie simulation = new Partie();
+            simulation.setPlateau(partie.getPlateau().CopierPlateau());
+
+            if (!simulation.jouerCoup(coup.li, coup.ci, coup.lf, coup.cf, couleur))
+                continue;
+
+            int score = -NegaMax(simulation, profondeur - 1, -beta, -alpha, -couleur);
+
+            if (score > meilleurScore)
+                meilleurScore = score;
+
+            alpha = Math.Max(alpha, score);
+            if (alpha >= beta)
+                break;
+        }
+
+        return meilleurScore;
+    }
+    
     
     
 

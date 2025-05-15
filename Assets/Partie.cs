@@ -331,4 +331,6 @@ public class Partie
         this.plateau = plateau;
     }
     public Plateau getPlateau() { return this.plateau; }
+   
+
 }

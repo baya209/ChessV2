@@ -349,7 +349,6 @@ public class Reine : Piece
         if (this.isEchec() != null) clone.setEchec((bool[,])this.isEchec().Clone());
         return clone;
     }
-
     /*
     public override Piece Cloner()
     {

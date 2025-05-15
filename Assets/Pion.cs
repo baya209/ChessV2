@@ -132,7 +132,7 @@ public class Pion : Piece
         if (!this.isFixe()) clone.setFixe();
         clone.setSymbole(this.getSymbole());
         if (this.isEchec() != null) clone.setEchec((bool[,])this.isEchec().Clone());
-        clone.setNbreDeplacement(this.getNbreDeplacement()); 
+        //clone.setNbreDeplacement(this.getNbreDeplacement());  a demander 
         return clone;
     }
 

@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public Text echiquier;
     Partie partie = new Partie();
-
+    NegaMaxIA Ngmax = new NegaMaxIA();
+   
     public InputField fli;
     public string li;
     public string ci;
@@ -58,5 +59,11 @@ public class GameManager : MonoBehaviour
             partie.jouerCoup(diviser[0], diviser[1], diviser[2], diviser[3], diviser[4]);
             echiquier.text = partie.afficher();
         }
+
+    }
+
+  public void SuggestionIa()
+    {
+        //Coup suggestion = Ngmax.SuggérerCoup(partie, couleurJoueur);
     }
 }
