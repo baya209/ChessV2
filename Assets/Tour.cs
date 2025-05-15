@@ -173,6 +173,17 @@ public class Tour : Piece
     }
     public override Piece Cloner()
     {
-        return new Tour((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
+        Tour clone = new Tour((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
+        clone.setValeur(this.getValeur());
+        if (!this.isFixe()) clone.setFixe();
+        clone.setSymbole(this.getSymbole());
+        if (this.isEchec() != null) clone.setEchec((bool[,])this.isEchec().Clone());
+        return clone;
     }
+    /*
+
+    public override Piece Cloner()
+    {
+        return new Tour((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
+    }*/
 }

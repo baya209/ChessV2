@@ -121,10 +121,21 @@ public class Pion : Piece
 
         return coups;
     }
-    public override Piece Cloner()
+   /* public override Piece Cloner()
     {
         return new Pion((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur()); 
+    }*/
+    public override Piece Cloner()
+    {
+        Pion clone = new Pion((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
+        clone.setValeur(this.getValeur());
+        if (!this.isFixe()) clone.setFixe();
+        clone.setSymbole(this.getSymbole());
+        if (this.isEchec() != null) clone.setEchec((bool[,])this.isEchec().Clone());
+        clone.setNbreDeplacement(this.getNbreDeplacement()); 
+        return clone;
     }
+
     public int getNbreDeplacement()
     {
         return nbreDeplacement;

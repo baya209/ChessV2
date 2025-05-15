@@ -342,6 +342,18 @@ public class Reine : Piece
     }
     public override Piece Cloner()
     {
+        Reine clone = new Reine((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
+        clone.setValeur(this.getValeur());
+        if (!this.isFixe()) clone.setFixe();
+        clone.setSymbole(this.getSymbole());
+        if (this.isEchec() != null) clone.setEchec((bool[,])this.isEchec().Clone());
+        return clone;
+    }
+
+    /*
+    public override Piece Cloner()
+    {
         return new Reine((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
     }
+    */
 }

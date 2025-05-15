@@ -142,6 +142,16 @@ public class Fou : Piece
 
     public override Piece Cloner()
     {
-        return new Fou((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
+        Fou clone = new Fou((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
+        clone.setValeur(this.getValeur());
+        if (!this.isFixe()) clone.setFixe();
+        clone.setSymbole(this.getSymbole());
+        if (this.isEchec() != null) clone.setEchec((bool[,])this.isEchec().Clone());
+        return clone;
     }
+    /*
+    public override Piece Cloner()
+    {
+        return new Fou((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur());
+    }*/
 }
