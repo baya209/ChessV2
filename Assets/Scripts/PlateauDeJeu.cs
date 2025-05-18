@@ -7,11 +7,19 @@ public class PlateuDeJeu : MonoBehaviour
     private GameObject[,] plateauJeu;
     private const int TAILLE_X = 8;
     private const int TAILLE_Y = 8;
+    private Camera cameraActuelle;
+    private Vector2Int positionSurvol;
+
     private Vector3 bonds;
 
     [Header("material")]
     [SerializeField] private Material material;
+    
+
+
+    //Dimension de la case/tuile dans unity
     [SerializeField] private float taillesX = 10f;
+
     [SerializeField] private float taillesY = 0.15f;
     [SerializeField] private Vector3 vec = Vector3.zero;
 
@@ -24,6 +32,54 @@ public class PlateuDeJeu : MonoBehaviour
     {
         creerPlateauJeu(taillesX, TAILLE_X, TAILLE_Y);
 
+    }
+
+    private void Update()
+    {
+
+        if (!cameraActuelle)
+        {
+            cameraActuelle = Camera.main;
+            return;
+        }
+
+        RaycastHit info;
+        Ray ray = cameraActuelle.ScreenPointToRay(Input.mousePosition);
+
+        //Si la souris est par dessus une tuile
+        if (Physics.Raycast(ray, out info, 1000, LayerMask.GetMask("Tuile","Survol"))) {
+
+            Debug.Log("Sur une pièce");
+            Vector2Int hitPosition = trouverIndexTuile(info.transform.gameObject);
+
+            if(positionSurvol == -Vector2Int.one)
+            {
+                positionSurvol = hitPosition;
+                plateauJeu[hitPosition.x, hitPosition.y].layer = LayerMask.NameToLayer("Survol");
+
+            }
+
+            if (positionSurvol != hitPosition)
+            {
+                
+                plateauJeu[positionSurvol.x,positionSurvol.y].layer = LayerMask.NameToLayer("Tuile"); 
+                positionSurvol = hitPosition;
+                plateauJeu[hitPosition.x, hitPosition.y].layer = LayerMask.NameToLayer("Survol");
+
+
+            }
+
+        }
+        else {
+            if (positionSurvol != -Vector2Int.one){
+                
+                plateauJeu[positionSurvol.x, positionSurvol.y].layer = LayerMask.NameToLayer("Tuile");
+                positionSurvol = -Vector2Int.one;
+                Debug.Log("Pas sur une pièce");
+               }
+            
+        }
+        Debug.Log(positionSurvol.ToString());
     }
 
 
@@ -70,14 +126,31 @@ public class PlateuDeJeu : MonoBehaviour
 
         mesh.RecalculateNormals();
 
-
+        cases.layer = LayerMask.NameToLayer("Tuile");
         cases.AddComponent<BoxCollider>();
-
+       
 
 
         return cases;
     }
     
+
+
+    private Vector2Int trouverIndexTuile(GameObject hitInfo)
+    {
+        for (int i = 0; i < TAILLE_X; i++)
+        {
+            for (int j = 0; j < TAILLE_Y; j++)
+            {
+                if (plateauJeu[i,j] == hitInfo)
+                {
+                    return new Vector2Int(i, j);
+                }
+            }
+        }
+        // Dans le cas ou là souris ne clique pas sur une case de valide (qui ne devrait pas exister
+        return new Vector2Int(-1, -1);    
+    }
     
     
 }
