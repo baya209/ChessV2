@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     string user;
 
     GameObject[,] pieces3D = new GameObject[8, 8];
+
+    private int nbreDePieceMangeB = 0;
+    private int nbreDePieceMangeN = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -74,7 +77,7 @@ public class GameManager : MonoBehaviour
 
             if (jouer == true)
             {
-                deplacerPiece3D(diviser[1], diviser[0], diviser[3], diviser[2]);
+                deplacerPiece3D(diviser[1], diviser[0], diviser[3], diviser[2], diviser[4]);
                 Debug.Log("PIECE DEPLACEMENT AVEC SUCCES");
             }
             
@@ -189,17 +192,35 @@ foreach (var piece in pieces)
         }
     }
 
-    public void deplacerPiece3D(int posiX, int posiY,int posfX, int posfY)
+    public void deplacerPiece3D(int posiX, int posiY,int posfX, int posfY, int equipe)
     {
         GameObject copieObject = pieces3D[posiX, posiY];
         
         
-
         Vector3 pos = plateuDeJeu.GetCentreTuile(posfX, posfY);
-
-        pieces3D[posiX, posiY].transform.position = pos;
+        //Déplacer la piece vers sa nouvelle position
+        if (pieces3D[posfX, posfY] == null)
+        {
+            pieces3D[posiX, posiY].transform.position = pos;
+        }
+        else
+        {
+            if (equipe == 1)
+            {
+                pieces3D[posfX, posfY].transform.position = plateuDeJeu.GetCentreTuile(nbreDePieceMangeB, -2);
+                nbreDePieceMangeB++;
+            }
+            else
+            {
+                pieces3D[posfX, posfY].transform.position = plateuDeJeu.GetCentreTuile(nbreDePieceMangeN, 9);
+                nbreDePieceMangeN++;
+            }
+            pieces3D[posfX, posfY] = null;
+            pieces3D[posiX, posiY].transform.position = pos;
+        }
 
         pieces3D[posfX, posfY] = copieObject;
         pieces3D[posiX, posiY] = null;
+
     }
 }
