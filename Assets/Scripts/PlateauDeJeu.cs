@@ -19,7 +19,7 @@ public class PlateuDeJeu : MonoBehaviour
 
     //Dimension de la case/tuile dans unity
     [SerializeField] private float taillesX = 10f;
-
+    // Decalage du plateau virtuelle permettant d'interagir avec les pièces
     [SerializeField] private float taillesY = 0.15f;
     [SerializeField] private Vector3 vec = Vector3.zero;
 
@@ -165,6 +165,24 @@ public class PlateuDeJeu : MonoBehaviour
     public GameObject[,] GetPlateauJeu()
     {
         return plateauJeu;
+    }
+    public float GetTailleTuile()
+    {
+        return taillesX;
+    }
+    public float GetDecalageVersHaut()
+    {
+        return taillesY;
+    }
+
+    public Vector3 GetBounds()
+    {
+        return bonds;
+    } 
+
+    public Vector3 GetCentreTuile(float posX, float posY)
+    {
+        return new Vector3(posX * taillesX, taillesY, posY*taillesX) - bonds + new Vector3(taillesX/2,0,taillesX/2);
     }
     
     public void reinitialiserCouelurCasue()
