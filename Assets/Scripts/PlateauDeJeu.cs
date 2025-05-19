@@ -13,7 +13,7 @@ public class PlateuDeJeu : MonoBehaviour
     private Vector3 bonds;
 
     [Header("material")]
-    [SerializeField] private Material material;
+    [SerializeField] private Material[] material; //
     
 
 
@@ -54,17 +54,22 @@ public class PlateuDeJeu : MonoBehaviour
 
             if(positionSurvol == -Vector2Int.one)
             {
+                reinitialiserCouelurCasue();
+
+
                 positionSurvol = hitPosition;
                 plateauJeu[hitPosition.x, hitPosition.y].layer = LayerMask.NameToLayer("Survol");
-
+                plateauJeu[hitPosition.x, hitPosition.y].GetComponent<MeshRenderer>().material = material[1];
             }
 
             if (positionSurvol != hitPosition)
             {
-                
+                reinitialiserCouelurCasue();
+
                 plateauJeu[positionSurvol.x,positionSurvol.y].layer = LayerMask.NameToLayer("Tuile"); 
                 positionSurvol = hitPosition;
                 plateauJeu[hitPosition.x, hitPosition.y].layer = LayerMask.NameToLayer("Survol");
+                plateauJeu[hitPosition.x, hitPosition.y].GetComponent<MeshRenderer>().material = material[1];
 
 
             }
@@ -72,9 +77,14 @@ public class PlateuDeJeu : MonoBehaviour
         }
         else {
             if (positionSurvol != -Vector2Int.one){
+
                 
+                reinitialiserCouelurCasue();
                 plateauJeu[positionSurvol.x, positionSurvol.y].layer = LayerMask.NameToLayer("Tuile");
                 positionSurvol = -Vector2Int.one;
+
+                
+               
                 Debug.Log("Pas sur une pièce");
                }
             
@@ -109,7 +119,7 @@ public class PlateuDeJeu : MonoBehaviour
         // creation d'un contenant pour le 3d 
         Mesh mesh = new Mesh();
         cases.AddComponent<MeshFilter>().mesh = mesh;
-        cases.AddComponent<MeshRenderer>().material = material;
+        cases.AddComponent<MeshRenderer>().material = material[0]; //
         
 
         // car notre rectangle pour la case a 4 cotes
@@ -152,5 +162,19 @@ public class PlateuDeJeu : MonoBehaviour
         return new Vector2Int(-1, -1);    
     }
     
+    public GameObject[,] GetPlateauJeu()
+    {
+        return plateauJeu;
+    }
     
+    public void reinitialiserCouelurCasue()
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                plateauJeu[i, j].GetComponent<MeshRenderer>().material = material[0];
+            }
+        }
+    }
 }
