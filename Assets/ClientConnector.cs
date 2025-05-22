@@ -8,10 +8,10 @@ public class ClientConnector : MonoBehaviour
 
     void Start()
     {
-        ConnectToServer();
+        ConnectionAuServer();
     }
 
-    void ConnectToServer()
+    void ConnectionAuServer()
     {
         try
         {
