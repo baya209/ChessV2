@@ -57,10 +57,17 @@ public class ServerManager : MonoBehaviour
             {
                 Debug.Log("Attente connexion...");
             }
-
+            
             TcpClient client1 = serveur.AcceptTcpClient();
+            TcpClient client2 = serveur.AcceptTcpClient();
+          
+            if(client1 != null) 
+                Debug.Log("Client1 Connected!");
 
-            Debug.Log("Connected!");
+            if(client2 != null)
+                Debug.Log("Client2 Connected!");
+          
+            
 
         }
         catch (SocketException e)
