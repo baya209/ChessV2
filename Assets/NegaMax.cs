@@ -59,7 +59,7 @@ public class NewMonoBehaviourScript
     }
 
     //choisi coups final a joueur a utilise pour UNITY
-    public Coup SuggérerCoup(Plateau plateau, int couleur)
+    public Coup SuggrerCoup(Plateau plateau, int couleur)
     {
         List<Coup> coups = plateau.GenererTousLesCoups(couleur);
         int meilleurScore = int.MinValue;
@@ -96,7 +96,7 @@ public class NewMonoBehaviourScript
             int colonne = piece.getColonne();
             int pieceCouleur = piece.getCouleur();
 
-            // Score matériel (selon allie ou ennemi)
+            // Score mat?riel (selon allie ou ennemi)
             score += (pieceCouleur == couleur) ? val : -val;
 
             // Bonus positionnel selon le tableau bonusCentre (exclut les pions)
@@ -104,7 +104,7 @@ public class NewMonoBehaviourScript
             {
                 int bonus = bonusCentre[ligne, colonne];
 
-                // Si c'est un roi, on enlève le bonus sauf en finale a travailler 
+                // Si c'est un roi, on enl?ve le bonus sauf en finale a travailler 
                 if (piece is Roi)
                     bonus = -bonus;
 
@@ -128,7 +128,7 @@ public class NewMonoBehaviourScript
                         if (x >= 0 && x < 8 && y >= 0 && y < 8)
                         {
                             int pieceAdj = tableau[x, y];
-                            if (pieceAdj != 5 && pieceAdj % 2 == pieceCouleur % 2) // même couleur
+                            if (pieceAdj != 5 && pieceAdj % 2 == pieceCouleur % 2) // m?me couleur
                                 allieeAutour++;
                         }
                     }
@@ -137,7 +137,7 @@ public class NewMonoBehaviourScript
                 score += (pieceCouleur == couleur) ? allieeAutour * 3 : -allieeAutour * 3;
             }
 
-            // Pion avancé sur le plateau  et dangereux = +score
+            // Pion avanc? sur le plateau  et dangereux = +score
             if (piece is Pion)
             {
                 bool estPionAvance = (pieceCouleur == 1 && ligne <= 3) || (pieceCouleur == -1 && ligne >= 4);
