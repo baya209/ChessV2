@@ -81,13 +81,12 @@ public class Cavalier : Piece
     {
         for (int i = 0; i < mouvements.GetLength(0); i++)
         {
-            for (int j = 0; j < mouvements.GetLength(1); j++)
-            {
-                if (ensembleDeplacement[i, j] == deplacementEntre[0,0])
+            
+                if (ensembleDeplacement[i, 0] == deplacementEntre[0,0] && ensembleDeplacement[i, 1] == deplacementEntre[0, 1])
                 {
                     return true;
                 }
-            }
+            
             
         }
         return false;
@@ -117,13 +116,13 @@ public class Cavalier : Piece
         foreach (int[] m in mouvements)
         {
             int l = ligne + m[0];
-            int c = colonne + m[1];
+            int c = colonne + m[1]; 
 
             if (l >= 0 && l < 8 && c >= 0 && c < 8)
             {
                 int cible = t[l, c];
 
-                if (cible == 0 || cible != couleur)
+                if (cible == 0 || cible != couleur )
                 {
                     int pieceCapturee = (cible == 0) ? -1 : cible;
                     coups.Add(new Coup(ligne, colonne, l, c, pieceCapturee));
