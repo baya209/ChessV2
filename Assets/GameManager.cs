@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour
                 deplacerPiece3D(posiY,posiX , posfY, posfX, equipe);
                 Debug.Log("<---------------- On déplace une pièce ---------------------->");
 
+
             }
         
         }
