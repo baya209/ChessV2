@@ -195,4 +195,24 @@ public class PlateuDeJeu : MonoBehaviour
             }
         }
     }
+
+    public int[] GetCaseCliquee()
+    {
+        int[] coordCase = new int[2];
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit info;
+            Ray ray = cameraActuelle.ScreenPointToRay(Input.mousePosition);
+
+            if ((Physics.Raycast(ray, out info, 1000, LayerMask.GetMask("Tuile", "Survol")))) {
+                Vector2Int hitPosition = trouverIndexTuile(info.transform.gameObject);
+                coordCase[0] = hitPosition.x;
+                coordCase[1] = hitPosition.y;
+            }
+            
+            return coordCase;
+
+        }
+        return null;
+    }
 }

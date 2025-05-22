@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 
 public class GameManager : MonoBehaviour
@@ -25,6 +27,13 @@ public class GameManager : MonoBehaviour
 
     private int nbreDePieceMangeB = 0;
     private int nbreDePieceMangeN = 0;
+
+    //Afin de pouvoir gérer la logique de clique et de déplacement des pièces
+    bool dejaClique = false;
+    int[] selectionDepart = new int[2];
+    int[] selectionArrive = new int[2];
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -86,8 +95,31 @@ public class GameManager : MonoBehaviour
             echiquier.text = partie.afficher();
         
         }
+
+        int[] deplacementClic = gererDeplacementClicPiece();
+        if (deplacementClic != null)
+        {
+            
+            int posiX = deplacementClic[1];
+            int posiY = deplacementClic[0];
+            int posfX = deplacementClic[3];
+            int posfY = deplacementClic[2];
+            int equipe = deplacementClic[4];
+            bool jouerClic = partie.jouerCoup(posiX, posiY, posfX, posfY, equipe);
+
+            if (jouerClic == true)
+            {
+                deplacerPiece3D(posiY,posiX , posfY, posfX, equipe);
+                Debug.Log("<---------------- On déplace une pièce ---------------------->");
+
+            }
         
+        }
         
+
+
+
+
     }
 
     public void placerPiece3D(List<Piece> pieces, GameObject[,] pieces3D)
@@ -192,6 +224,7 @@ foreach (var piece in pieces)
         }
     }
 
+    //Deplacer les pièces en rentrant les coordonées de départ et d'arrivées
     public void deplacerPiece3D(int posiX, int posiY,int posfX, int posfY, int equipe)
     {
         GameObject copieObject = pieces3D[posiX, posiY];
@@ -223,4 +256,56 @@ foreach (var piece in pieces)
         pieces3D[posiX, posiY] = null;
 
     }
+
+
+    //Permet de lier le clic de la souris avec la logique de déplacement dans le jeu
+    public int[] gererDeplacementClicPiece()
+    {
+        int[] caseCliquee = plateuDeJeu.GetCaseCliquee();
+
+        if (caseCliquee == null)
+            return null;
+
+        // 1er clic : on sélectionne une pièce
+        if (!dejaClique)
+        {
+            if (pieces3D[caseCliquee[0], caseCliquee[1]] != null)
+            {
+                selectionDepart[0] = caseCliquee[0];
+                selectionDepart[1] = caseCliquee[1];
+                dejaClique = true;
+                Debug.Log("Première sélection : " + selectionDepart[0] + "," + selectionDepart[1]);
+            }
+        }
+        // 2e clic : on sélectionne une destination
+        else
+        {
+            selectionArrive[0] = caseCliquee[0];
+            selectionArrive[1] = caseCliquee[1];
+
+            if (selectionArrive[0] == selectionDepart[0] && selectionArrive[1] == selectionDepart[1])
+            {
+                // Même case que la sélection de départ, on annule
+                Debug.Log("Sélection annulée.");
+                dejaClique = false;
+                return null;
+            }
+
+            int[] deplacement = new int[5];
+            deplacement[0] = selectionDepart[0];
+            deplacement[1] = selectionDepart[1];
+            deplacement[2] = selectionArrive[0];
+            deplacement[3] = selectionArrive[1];
+            //Afin de trouver l'équipe (couleur) de la pièce que ll'on veut déplacer
+            deplacement[4] = partie.getPlateau().getTableau()[selectionDepart[1], selectionDepart[0]];
+            Debug.Log("Equipe numero:***********   " + deplacement[4]); 
+
+            dejaClique = false;
+            Debug.Log("Déplacement sélectionné : de [" + deplacement[0] + "," + deplacement[1] + "] à [" + deplacement[2] + "," + deplacement[3] + "]");
+            return deplacement;
+        }
+
+        return null;
+    }
+
 }
