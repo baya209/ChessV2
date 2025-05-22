@@ -2,10 +2,10 @@
   "dependencies": {
     "com.unity.collab-proxy": "2.7.1",
     "com.unity.feature.development": "1.0.1",
- HEAD
+
     "com.unity.render-pipelines.universal": "14.0.11",
     "com.unity.netcode.gameobjects": "1.13.0",
- essaieLan&Multijoueur2
+
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.7.6",
     "com.unity.transport": "2.5.1",
