@@ -9,16 +9,36 @@ public class ClientConnector : MonoBehaviour
     //public GameObject connectButton;   // Bouton "Se connecter"
 
     void Start()
-    {//test
-     // Vérifie qu’un bouton est assigné
-        /*if (connectButton != null)
-         {*/
-        // GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ConnectToServer);
-        /*}
-         else
-             Debug.LogError("Le bouton n’est pas assigné dans l’Inspector !");*/
+    {
+        if (ipInput == null)
+        {
+            Debug.LogError("Champ IP non assigné !" +gameObject.name
+             );
+            return;
+        }
+
         ipInput.onSubmit.AddListener(delegate { ConnectToServer(); });
 
+        NetworkManager.Singleton.OnClientConnectedCallback += (clientId) =>
+        {
+            Debug.Log("Connecté avec succès !");
+        };
+
+        NetworkManager.Singleton.OnClientDisconnectCallback += (clientId) =>
+        {
+            Debug.Log("Échec ou déconnexion !");
+        };
+        /*ipInput.onSubmit.AddListener(delegate { ConnectToServer(); });
+
+        NetworkManager.Singleton.OnClientConnectedCallback += (clientId) =>
+        {
+            Debug.Log("Connecté avec succès !");
+        };
+
+        NetworkManager.Singleton.OnClientDisconnectCallback += (clientId) =>
+        {
+            Debug.Log("Échec ou déconnexion !");
+        };*/
     }
 
     void ConnectToServer()
