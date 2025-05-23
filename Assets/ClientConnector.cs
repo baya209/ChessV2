@@ -9,7 +9,7 @@ public class ClientConnector : MonoBehaviour
     public GameObject connectButton;   // Bouton "Se connecter"
 
     void Start()
-    {
+    {//test
         // Vérifie qu’un bouton est assigné
         if (connectButton != null)
         {
