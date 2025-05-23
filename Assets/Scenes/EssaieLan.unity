@@ -296,7 +296,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &113370983
 RectTransform:
   m_ObjectHideFlags: 0
@@ -860,7 +860,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 11500000, guid: dd8ec8cd0a2e6ef4bb9cef6ca5559ee4, type: 3}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 1
@@ -1431,7 +1431,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ipInput: {fileID: 2120629388}
-  connectButton: {fileID: 0}
 --- !u!4 &1055359054
 Transform:
   m_ObjectHideFlags: 0
@@ -1824,7 +1823,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ipInput: {fileID: 0}
-  connectButton: {fileID: 0}
 --- !u!4 &1557174480
 Transform:
   m_ObjectHideFlags: 0
@@ -2375,7 +2373,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1748712836
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2571,7 +2569,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ipInput: {fileID: 2120629388}
-  connectButton: {fileID: 712929838}
 --- !u!4 &1786810356
 Transform:
   m_ObjectHideFlags: 0

@@ -6,15 +6,19 @@ using Unity.Netcode.Transports.UTP;
 public class ClientConnector : MonoBehaviour
 {
     public TMP_InputField ipInput;     // Champ pour saisir l'adresse IP
-    public GameObject connectButton;   // Bouton "Se connecter"
+    //public GameObject connectButton;   // Bouton "Se connecter"
 
     void Start()
     {//test
-        // Vérifie qu’un bouton est assigné
-        if (connectButton != null)
-        {
-            connectButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ConnectToServer);
-        }
+     // Vérifie qu’un bouton est assigné
+        /*if (connectButton != null)
+         {*/
+        // GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ConnectToServer);
+        /*}
+         else
+             Debug.LogError("Le bouton n’est pas assigné dans l’Inspector !");*/
+        ipInput.onSubmit.AddListener(delegate { ConnectToServer(); });
+
     }
 
     void ConnectToServer()
@@ -26,6 +30,7 @@ public class ClientConnector : MonoBehaviour
 
         NetworkManager.Singleton.StartClient();
 
-        Debug.Log("Tentative de connexion au serveur : " + ip);
+       // Debug.Log("Tentative de connexion au serveur : " + ip);
+        Debug.Log("Bouton cliqué ! IP : " + ip);
     }
 }
