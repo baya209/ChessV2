@@ -1,36 +1,31 @@
-using System;
-using System.Net.Sockets;
-using UnityEngine;
+﻿using UnityEngine;
+using TMPro;
+using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 
 public class ClientConnector : MonoBehaviour
 {
-    private TcpClient client;
+    public TMP_InputField ipInput;     // Champ pour saisir l'adresse IP
+    public GameObject connectButton;   // Bouton "Se connecter"
 
     void Start()
     {
-        ConnectionAuServer();
-    }
-
-    void ConnectionAuServer()
-    {
-        try
+        // Vérifie qu’un bouton est assigné
+        if (connectButton != null)
         {
-            client = new TcpClient("127.0.0.1", 8080);
-            Debug.Log(" Connected to server!");
-            
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(" Failed to connect to server: " + ex.Message);
+            connectButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ConnectToServer);
         }
     }
 
-    private void OnApplicationQuit()
+    void ConnectToServer()
     {
-        if (client != null && client.Connected)
-        {
-            client.Close();
-            Debug.Log(" Disconnected from server.");
-        }
+        string ip = ipInput.text;
+
+        var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+        transport.SetConnectionData(ip, 7777); // Port réseau par défaut
+
+        NetworkManager.Singleton.StartClient();
+
+        Debug.Log("Tentative de connexion au serveur : " + ip);
     }
 }
