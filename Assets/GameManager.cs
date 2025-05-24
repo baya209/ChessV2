@@ -33,6 +33,11 @@ public class GameManager : MonoBehaviour
     int[] selectionDepart = new int[2];
     int[] selectionArrive = new int[2];
 
+    //Pour le serveur
+    ConnecteurClientV2 client; 
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +50,7 @@ public class GameManager : MonoBehaviour
 
         placerPiece3D(pieces,pieces3D);
         
+        client = FindObjectOfType<ConnecteurClientV2>();
     }
   
     // Update is called once per frame
@@ -96,6 +102,9 @@ public class GameManager : MonoBehaviour
         
         }
 
+        //Vérifie si la partie à été update dans le serveur et update la partie du joueur sur son appareil
+        lireDeplacementServeur();
+
         int[] deplacementClic = gererDeplacementClicPiece();
         if (deplacementClic != null)
         {
@@ -112,6 +121,7 @@ public class GameManager : MonoBehaviour
                 deplacerPiece3D(posiY,posiX , posfY, posfX, equipe);
                 Debug.Log("<---------------- On déplace une pièce ---------------------->");
 
+                envoyerDeplacementServeur(posiX, posiY, posfX, posfY, equipe);
 
             }
         
@@ -307,6 +317,33 @@ foreach (var piece in pieces)
         }
 
         return null;
+    }
+
+    public void envoyerDeplacementServeur(int posiX, int posiY,int posfX, int posfY, int equipe)
+    {
+        string message = $"{posiX},{posiY},{posfX},{posfY},{equipe}";
+        client.EnvoyerMessage(message);
+    }
+
+    public void lireDeplacementServeur()
+    {
+        if (client == null)
+            return;
+
+        string deplacementServeur = client.ConsommerDernierMessage();
+        
+        if (deplacementServeur != null)
+        {
+            string[] coordonnees = deplacementServeur.Split(',');
+            int posiX = int.Parse(coordonnees[0]);
+            int posiY = int.Parse(coordonnees[1]);
+            int posfX = int.Parse(coordonnees[2]);
+            int posfY = int.Parse(coordonnees[3]);
+            int equipe = int.Parse(coordonnees[4]);
+
+            partie.jouerCoup(posiY, posiX, posfY, posfX, equipe);
+            deplacerPiece3D(posiX, posiY, posfX, posfY, equipe);
+        }
     }
 
 }
