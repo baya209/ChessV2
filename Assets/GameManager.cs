@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     {
         
         partie.creerPartie();
-        echiquier.text = partie.afficher();
+        //echiquier.text = partie.afficher();
         List<Piece> pieces = partie.getPlateau().getPieces();
         
 
@@ -56,11 +56,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        user = inputField.text;
+        //user = inputField.text;
         
 
-
-        
+        // Code pour afficher la partie textuellement
+        /**
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             Debug.Log("enter");
@@ -101,6 +101,7 @@ public class GameManager : MonoBehaviour
             echiquier.text = partie.afficher();
         
         }
+        **/
 
         //Vérifie si la partie à été update dans le serveur et update la partie du joueur sur son appareil
         lireDeplacementServeur();
@@ -114,7 +115,7 @@ public class GameManager : MonoBehaviour
             int posfX = deplacementClic[3];
             int posfY = deplacementClic[2];
             int equipe = deplacementClic[4];
-            bool jouerClic = partie.jouerCoup(posiX, posiY, posfX, posfY, equipe);
+            bool jouerClic = partie.jouerCoup(posiX, posiY, posfX, posfY, equipe);        
 
             if (jouerClic == true)
             {
@@ -341,8 +342,11 @@ foreach (var piece in pieces)
             int posfY = int.Parse(coordonnees[3]);
             int equipe = int.Parse(coordonnees[4]);
 
-            partie.jouerCoup(posiY, posiX, posfY, posfX, equipe);
-            deplacerPiece3D(posiX, posiY, posfX, posfY, equipe);
+            Debug.Log(posiX+ " " + posiY +" " + posfX + " " + posfY + " " + equipe);
+
+
+            partie.jouerCoup(posiX, posiY, posfX, posfY, equipe);
+            deplacerPiece3D(posiY, posiX, posfY, posfX, equipe);
         }
     }
 

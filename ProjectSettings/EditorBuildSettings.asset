@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EssaieLan 2.unity
     guid: 4be63940ffe927640b54f697f0ca4cfe
+  - enabled: 1
+    path: Assets/Scenes/plateau client2.unity
+    guid: 56bce42f9c6654c4686926d636080293
   m_configObjects: {}
