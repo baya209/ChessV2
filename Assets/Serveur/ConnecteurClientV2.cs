@@ -9,7 +9,7 @@ public class ConnecteurClientV2 : MonoBehaviour
     private NetworkStream stream;
     private string dernierMessageRecu;
 
-    // Démarre la connexion et écoute les messages
+    // Crée un nouveau TcpClient (client) prêt à écouter les messages envoyés sur le stream
     private void Start()
     {
         client = new TcpClient("127.0.0.1", 8080);
@@ -23,11 +23,13 @@ public class ConnecteurClientV2 : MonoBehaviour
         byte[] buffer = new byte[1024];
         while (true)
         {
+            
             int bytesRead = stream.Read(buffer, 0, buffer.Length);
             if (bytesRead > 0)
             {
+                // Convertir l'information recu en bytes à un format de chaine de caractère
                 string message = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                lock (this)
+                lock (this) //Cela crée un verrou sur l’objet courant (this), pour empêcher que plusieurs threads accèdent à la variable
                 {
                     dernierMessageRecu = message; // stocké temporairement
                 }
@@ -35,7 +37,10 @@ public class ConnecteurClientV2 : MonoBehaviour
         }
     }
 
-    // Lire et CONSOMMER le message
+    /// <summary>
+    /// Permet de lire et supprimer le dernier message envoyer dans le stream
+    /// </summary>
+    /// <returns></returns>
     public string ConsommerDernierMessage()
     {
         lock (this)

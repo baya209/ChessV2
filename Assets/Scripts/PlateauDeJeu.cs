@@ -5,26 +5,22 @@ public class PlateuDeJeu : MonoBehaviour
 {
   
     private GameObject[,] plateauJeu;
-    private const int TAILLE_X = 8;
-    private const int TAILLE_Y = 8;
+    private const int TAILLE_X = 8; // Dimension du du plateau (8 cases par 8 cases)
+    private const int TAILLE_Y = 8; // Dimension du du plateau (8 cases par 8 cases)
     private Camera cameraActuelle;
-    private Vector2Int positionSurvol;
+    private Vector2Int positionSurvol; // Position de survol de la souris
 
-    private Vector3 bonds;
+    private Vector3 bonds; // Décalage pour trouver le centre des cases, toutes les cases sont de même tailles
 
     [Header("material")]
-    [SerializeField] private Material[] material; //
+    [SerializeField] private Material[] material; 
     
 
 
-    //Dimension de la case/tuile dans unity
-    [SerializeField] private float taillesX = 10f;
-    // Decalage du plateau virtuelle permettant d'interagir avec les pièces
-    [SerializeField] private float taillesY = 0.15f;
+    
+    [SerializeField] private float taillesX = 10f; //Dimension de la case/tuile dans unity    
+    [SerializeField] private float taillesY = 0.15f;// Decalage du plateau virtuelle (un peu vers le hat) permettant d'interagir avec les pièces
     [SerializeField] private Vector3 vec = Vector3.zero;
-
-
-
 
 
 
@@ -77,7 +73,7 @@ public class PlateuDeJeu : MonoBehaviour
         }
         else {
             if (positionSurvol != -Vector2Int.one){
-
+                // Si la souris ne se trouve sur aucune case valide ( on réinitialise la couleur ) on ne survole donc plus la case
                 
                 reinitialiserCouelurCasue();
                 plateauJeu[positionSurvol.x, positionSurvol.y].layer = LayerMask.NameToLayer("Tuile");
@@ -116,13 +112,13 @@ public class PlateuDeJeu : MonoBehaviour
         GameObject cases = new GameObject(string.Format("X: {0}, Y: {1}", i, j));
         cases.transform.parent = transform;
 
-        // creation d'un contenant pour le 3d 
+        // Creation d'un contenant pour le 3d 
         Mesh mesh = new Mesh();
         cases.AddComponent<MeshFilter>().mesh = mesh;
-        cases.AddComponent<MeshRenderer>().material = material[0]; //
+        cases.AddComponent<MeshRenderer>().material = material[0]; 
         
 
-        // car notre rectangle pour la case a 4 cotes
+        // Car notre rectangle pour la case a 4 cotes
 
         Vector3[] vecteur = new Vector3[4];
         vecteur[0] = new Vector3(i * taille, taillesY, j * taille) - bonds;        // coin bas gauche
@@ -144,7 +140,6 @@ public class PlateuDeJeu : MonoBehaviour
         return cases;
     }
     
-
 
     private Vector2Int trouverIndexTuile(GameObject hitInfo)
     {

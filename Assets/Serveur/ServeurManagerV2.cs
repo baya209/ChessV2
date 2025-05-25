@@ -12,12 +12,15 @@ public class ServeurManagerV2 : MonoBehaviour
     Thread serveurThread;
 
     void Start()
-    {
+    {       
         serveurThread = new Thread(LancerServeur);
         serveurThread.IsBackground = true;
         serveurThread.Start();
     }
 
+    /// <summary>
+    /// Instancie le serveur avec l'iP de l'hote et d'un port quelconque et accepte l'entrée de deux utilisateurs (cleints)
+    /// </summary>
     void LancerServeur()
     {
         try
@@ -45,6 +48,12 @@ public class ServeurManagerV2 : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Attend que l'un des clients envoie un message, le décode et le renvoie à l'autre client
+    /// </summary>
+    /// <param name="sourceClient"></param>
+    /// <param name="destinationStream"></param>
+    /// <param name="nomClient"></param>
     void EcouterClient(TcpClient sourceClient, NetworkStream destinationStream, string nomClient)
     {
         try
@@ -58,8 +67,8 @@ public class ServeurManagerV2 : MonoBehaviour
                 string message = System.Text.Encoding.UTF8.GetString(buffer, 0, bytesRead).Trim();
                 Debug.Log($" {nomClient} a envoyé : {message}");
 
-                byte[] dataToSend = System.Text.Encoding.UTF8.GetBytes(message + "\n");
-                destinationStream.Write(dataToSend, 0, dataToSend.Length);
+                byte[] dataAEnvoyer = System.Text.Encoding.UTF8.GetBytes(message + "\n");
+                destinationStream.Write(dataAEnvoyer, 0, dataAEnvoyer.Length);
             }
         }
         catch (Exception e)

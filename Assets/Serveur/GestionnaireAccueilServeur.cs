@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Permet de gérer si on crée un serveur ou un nouveau client
+/// </summary>
 public class GestionnaireAccueilServeur : MonoBehaviour
 {
     public GameObject serveurPrefab;
