@@ -9,21 +9,6 @@ public class Plateau
     
     private bool[,] dangerNoir = new bool[8,8];
     private bool[,] dangerBlanc = new bool[8, 8];
-    private int[,] tableauModulo = new int[8,8];
-    /*
-    2 = blanc
-    3 = noir
-    5 = vide
-    7 = zone danger noir
-    11 = zone danger blanc
-    13 = pion
-    17 = tour
-    19 = cavalier
-    23 = fou
-    29 = reine
-    31 = roi
-     */
-
 
     private int[,] tableau = new int[8, 8]; // -1 = noir /// 0 = vide /// 1= blanc
     List<Piece> pieces = new List<Piece>();
@@ -37,11 +22,6 @@ public class Plateau
     public void setTableau(in int[,] tableau)
     {
         this.tableau = tableau;
-    }
-    public int[,] getTableauModulo() { return tableauModulo; }
-    public void setTableauModulo( int[,] tableauModulo)
-    {
-        this.tableauModulo = tableauModulo;
     }
     public void setPieces(List<Piece> pieces) {  this.pieces = pieces; }
     public List<Piece> getPieces() { return pieces; }
@@ -57,7 +37,7 @@ public class Plateau
     public bool[,] getDangerBlanc() { return dangerBlanc; }
 
 
-    // ecrire deplacement speciaux dans jeu
+    // ecrire les deplacements speciaux dans jeu
     public List<Coup> GenererTousLesCoups(int couleur)
     {
         List<Coup> tousLesCoups = new List<Coup>();
@@ -125,20 +105,5 @@ public class Plateau
 
         return copie;
     }
-    /*
-    public int EvaluerPlateau(int couleur)
-    {
-        int score = 0;
-
-        foreach (Piece piece in pieces)
-        {
-            
-            // pour savoir le tour
-            score += piece.getValeur() * piece.getCouleur();
-        }
-
-        // Ajuster le score selon la couleur qui joue
-        return score * couleur;
-    }
-    */
+    
 }
