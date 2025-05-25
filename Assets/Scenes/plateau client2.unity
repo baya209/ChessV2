@@ -436,6 +436,8 @@ MonoBehaviour:
   material:
   - {fileID: 2100000, guid: 38217b068f14344719c8f99e6d5c5c4e, type: 2}
   - {fileID: 2100000, guid: 94bdf81d50a69c143b306b563fa0fe5a, type: 2}
+  - {fileID: 2100000, guid: 498e27289b205514cbc1239a89f5f2b9, type: 2}
+  - {fileID: 2100000, guid: 0894744a54842c940ae43ada8c5e87c0, type: 2}
   taillesX: 10
   taillesY: 0.15
   vec: {x: 0, y: 0, z: 0}

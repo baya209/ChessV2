@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewMonoBehaviourScript
+public class NegaMaxScript
 {
 
     /* 
@@ -59,7 +59,7 @@ public class NewMonoBehaviourScript
     }
 
     //choisi coups final a joueur a utilise pour UNITY
-    public Coup SuggrerCoup(Plateau plateau, int couleur)
+    public Coup SuggererCoup(Plateau plateau, int couleur)
     {
         List<Coup> coups = plateau.GenererTousLesCoups(couleur);
         int meilleurScore = int.MinValue;

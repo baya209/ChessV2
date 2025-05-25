@@ -15,4 +15,21 @@ public class  Coup
         this.cf = cf;
         this.pieceCapturee = pieceCapturee;
     }
+
+    public int getLi()
+    {
+        return li;
+    }
+    public int getCi()
+    {
+        return ci;
+    }
+    public int getLf()
+    {
+        return lf;
+    }
+    public int getCf()
+    {
+        return cf;
+    }
 }

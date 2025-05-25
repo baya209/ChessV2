@@ -215,4 +215,12 @@ public class PlateuDeJeu : MonoBehaviour
         }
         return null;
     }
+
+    public void changerCouleurCase(Coup coup, int indexMaterielDepart, int indexMaterielArrivee)
+    {
+        
+            plateauJeu[coup.getCi(), coup.getLi()].GetComponent<MeshRenderer>().material = material[indexMaterielDepart];
+            plateauJeu[coup.getCf(), coup.getLf()].GetComponent<MeshRenderer>().material = material[indexMaterielArrivee];
+        
+    }
 }
