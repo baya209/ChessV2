@@ -46,7 +46,7 @@ La case survolée est en jaune et la case proposée est en vert fluo.
 
 ## Installation
 
-Installer le projet en le clonant de GIT. Il faut ensuite ouvrir le Fichier .exe
+Installer le projet en le clonant de GIT, puis créer le fichier .exe localement pour le lancer.
 
  
 ## Structure
@@ -61,9 +61,13 @@ Les scripts, scènes, images, musique de fond, etc. sont dans les sous dossiers 
 
 - Changement de décors
 
-- Sauvegarde de la partie localement et sur le nuage
+- Sauvegarde de la partie localement
 
 - Simplification de la logique
+
+- Augmentation de la profondeur de l'IA
+
+- Barre d'évaluation du meneur de jeu
 
 ## Fonctionalité de l'IA
 Permet de prédire le meilleur coup au maximum de trois coups en avance 
