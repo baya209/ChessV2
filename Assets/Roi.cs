@@ -43,7 +43,6 @@ public class Roi : Piece
 
     }
     
-
     public override bool[,] isDanger(bool[,] danger)
     {
         if (getLigne() > 0)

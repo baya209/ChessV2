@@ -52,7 +52,6 @@ public class Cavalier : Piece
         
     }
 
-
     public override bool[,] isDanger(bool[,] danger)
     {
         
@@ -76,7 +75,12 @@ public class Cavalier : Piece
 
     }
 
-    //Methode pour vérifier si des coordonées sont égales (vecteurs identiques)
+    /// <summary>
+    /// Methode pour vérifier si des coordonées sont identiques (vecteurs identiques), permettant de valider un déplacement
+    /// </summary>
+    /// <param name="ensembleDeplacement"></param>
+    /// <param name="deplacementEntre"></param>
+    /// <returns></returns>
     public bool tableauxIdentiques(int[,]ensembleDeplacement, int[,]deplacementEntre)
     {
         for (int i = 0; i < mouvements.GetLength(0); i++)

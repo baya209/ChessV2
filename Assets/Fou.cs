@@ -17,7 +17,7 @@ public class Fou : Piece
         int depy = c - getColonne();
 
        
-        // vérifie si la case et vide ou s'il y à un piont adverse
+        // vérifie si la case est vide ou s'il y à un pion adverse
         if (getTableau()[l, c] == 0 || getTableau()[l, c] == (-1 * getCouleur()))
         {
             // vérifier s'il y a un déplacement en diagonale
@@ -59,12 +59,15 @@ public class Fou : Piece
                     Debug.LogError(directionLigne);// -----
                     **/
 
-                    //Incremente la position à vérifier case par case (en effectuant la première vérification à partir de la deuxième case) si non ca break directement de la méthode
+                    /**Incremente la position à vérifier case par case (en effectuant la première vérification à partir de la deuxième case),
+                     * si non cela break directement de la méthode, car la la première case est occupée par la pièce elle même
+                     * */
 
                     ligneActuelle += directionLigne; // si cest vert le haut ça aditionne si c'est vers le bas ça soustrait
                     colonneActuelle += directionColonne; // si cest vert le haut ça aditionne si c'est vers le bas ça soustrait
 
-                    if (getTableau()[ligneActuelle, colonneActuelle] == 0 || getTableau()[ligneActuelle, colonneActuelle] == (-1 * getCouleur())) // Vérifie si une pièce de même couleur bloque le passage
+                    // Vérifie si une pièce de même couleur bloque le passage
+                    if (getTableau()[ligneActuelle, colonneActuelle] == 0 || getTableau()[ligneActuelle, colonneActuelle] == (-1 * getCouleur())) 
                     {
                         
                         return true;

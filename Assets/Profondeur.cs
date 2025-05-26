@@ -15,16 +15,16 @@ public class Profondeur: MonoBehaviour
         switch (index)
         {
             case 0:
-                NewMonoBehaviourScript.profondeurMax = 1;
+                NegaMaxScript.profondeurMax = 1;
                 break; //changer profondeur 
             case 1:
-                NewMonoBehaviourScript.profondeurMax = 2;
+                NegaMaxScript.profondeurMax = 2;
                 break;
             case 2:
-                NewMonoBehaviourScript.profondeurMax = 3;
+                NegaMaxScript.profondeurMax = 3;
                 break;
         }
-        Debug.Log("Profondeur changée à : " + NewMonoBehaviourScript.profondeurMax); // Afficher la nouvelle profondeur
+        Debug.Log("Profondeur changée à : " + NegaMaxScript.profondeurMax); // Afficher la nouvelle profondeur
     }
     private void Start()
     {

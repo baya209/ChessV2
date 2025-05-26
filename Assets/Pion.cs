@@ -3,13 +3,18 @@ using System.Collections.Generic;
 
 public class Pion : Piece
 {
+    // Essentiel pour pouvoir gérer les déplacements particuliés du pion
     private int nbreDeplacement = 0;
     public Pion(int[,] tableau, int ligne, int colonne, int couleur) : base(tableau, ligne, colonne, couleur)
     {
         setSymbole('P');
         setValeur(100);
     }
+    public int getNbreDeplacement()
+    {
+        return nbreDeplacement;
 
+    }
     public override bool deplacer(int l, int c){//  c colonne finale, l ligne finale
 
         if(getTableau()[l, c] == 0)//Verifie que la case est vide 
@@ -125,9 +130,5 @@ public class Pion : Piece
     {
         return new Pion((int[,])getTableau().Clone(), getLigne(), getColonne(), getCouleur()); 
     }
-    public int getNbreDeplacement()
-    {
-        return nbreDeplacement;
-
-    }
+    
 }

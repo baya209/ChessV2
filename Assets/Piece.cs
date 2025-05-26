@@ -26,7 +26,6 @@ public abstract class Piece
     }
 
 
-    public abstract bool deplacer(int l, int c);
     public int getColonne() {
         return colonne;
     }
@@ -54,19 +53,6 @@ public abstract class Piece
     public int[,] getTableau() { 
     return tableau;
     }
-    public abstract bool[,] isDanger(bool[,]danger);
-    public void setFixe() {
-        fixe = false;
-    }
-    public bool isFixe() { return fixe; }
-    public void setEchec(bool[,] echec)
-    {
-        this.echec = echec;
-    }
-    public bool[,] isEchec()
-    {
-        return echec;
-    }
     public char getSymbole()
     {
         return symbole;
@@ -75,6 +61,31 @@ public abstract class Piece
     {
         this.symbole = symbole;
     }
+    public void setEchec(bool[,] echec)
+    {
+        this.echec = echec;
+    }
+    public void setFixe() {
+        fixe = false;
+    }
+
+
+    public abstract bool deplacer(int l, int c);
+
+    /// <summary>
+    /// Permet de retourner un tableau pour voir si le roi est en échec
+    /// </summary>
+    /// <param name="danger"></param>
+    /// <returns></returns>
+    public abstract bool[,] isDanger(bool[,]danger);
+   
+    public bool isFixe() { return fixe; }
+
+    public bool[,] isEchec()
+    {
+        return echec;
+    }
+  
     public abstract Piece Cloner();
 
     public abstract List<Coup> GenererCoupsPossibles(Plateau plateau);

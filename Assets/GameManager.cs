@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
+//using static UnityEditor.PlayerSettings;
 
 
 public class GameManager : MonoBehaviour
@@ -33,28 +33,39 @@ public class GameManager : MonoBehaviour
     int[] selectionDepart = new int[2];
     int[] selectionArrive = new int[2];
 
+    //Pour le serveur
+    ConnecteurClientV2 client;
+
+    //Permet de savoir c'est au tour de qu'elle équipe de jouer
+    int equipeJoueur; // Blanc = 1 et Noir = -1
+    bool entrainDeJouer = false; // La première équipe à commencer ce sont les blancs
+    bool premierCoup = true;
+
+    NegaMaxScript negaMax = new NegaMaxScript();
+
 
     // Start is called before the first frame update
     void Start()
     {
         
         partie.creerPartie();
-        echiquier.text = partie.afficher();
+        //echiquier.text = partie.afficher();
         List<Piece> pieces = partie.getPlateau().getPieces();
         
 
         placerPiece3D(pieces,pieces3D);
         
+        client = FindObjectOfType<ConnecteurClientV2>();
     }
   
     // Update is called once per frame
     void Update()
     {
-        user = inputField.text;
+        //user = inputField.text;
         
 
-
-        
+        // Code pour afficher la partie textuellement
+        /**
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             Debug.Log("enter");
@@ -95,6 +106,11 @@ public class GameManager : MonoBehaviour
             echiquier.text = partie.afficher();
         
         }
+        **/
+
+        //Vérifie si la partie à été update dans le serveur et update la partie du joueur sur son appareil
+        lireDeplacementServeur();
+        
 
         int[] deplacementClic = gererDeplacementClicPiece();
         if (deplacementClic != null)
@@ -105,18 +121,23 @@ public class GameManager : MonoBehaviour
             int posfX = deplacementClic[3];
             int posfY = deplacementClic[2];
             int equipe = deplacementClic[4];
-            bool jouerClic = partie.jouerCoup(posiX, posiY, posfX, posfY, equipe);
+
+            
+            bool jouerClic = partie.jouerCoup(posiX, posiY, posfX, posfY, equipe);        
 
             if (jouerClic == true)
             {
+                determinerEquipeJoueur(equipe);
                 deplacerPiece3D(posiY,posiX , posfY, posfX, equipe);
                 Debug.Log("<---------------- On déplace une pièce ---------------------->");
 
+                envoyerDeplacementServeur(posiX, posiY, posfX, posfY, equipe);
+                entrainDeJouer = false;
 
             }
         
         }
-        
+        Suggestion();
 
 
 
@@ -307,6 +328,77 @@ foreach (var piece in pieces)
         }
 
         return null;
+    }
+
+    public void envoyerDeplacementServeur(int posiX, int posiY,int posfX, int posfY, int equipe)
+    {
+        string message = $"{posiX},{posiY},{posfX},{posfY},{equipe}";
+        client.EnvoyerMessage(message);
+    }
+
+    public void lireDeplacementServeur()
+    {
+        if (client == null)
+            return;
+
+        string deplacementServeur = client.ConsommerDernierMessage();
+        
+        if (deplacementServeur != null)
+        {
+            string[] coordonnees = deplacementServeur.Split(',');
+            int posiX = int.Parse(coordonnees[0]);
+            int posiY = int.Parse(coordonnees[1]);
+            int posfX = int.Parse(coordonnees[2]);
+            int posfY = int.Parse(coordonnees[3]);
+            int equipe = int.Parse(coordonnees[4]);
+
+            Debug.Log(posiX+ " " + posiY +" " + posfX + " " + posfY + " " + equipe);
+
+
+            partie.jouerCoup(posiX, posiY, posfX, posfY, equipe);
+            deplacerPiece3D(posiY, posiX, posfY, posfX, equipe);
+
+            entrainDeJouer = true; // ------
+
+
+
+        }
+    }
+    public void Suggestion()
+    {
+        if (entrainDeJouer == true && plateuDeJeu != null)
+        {
+            
+            Coup suggestion = negaMax.SuggererCoup(partie.getPlateau(), equipeJoueur);
+            if (suggestion != null)
+            {
+                Debug.Log(suggestion);
+                int suggXi = suggestion.getLi();
+                int suggYi = suggestion.getCi();
+                int suggXf = suggestion.getLf();
+                int suggYf = suggestion.getCf();
+                Debug.Log("Coup suggéré Xi: " + suggXi);
+                Debug.Log("Coup suggéré Yi: " + suggYi);
+                Debug.Log("Coup suggéré Xf: " + suggXf);
+                Debug.Log("Coup suggéré Yf: " + suggYf);
+
+                // Afin d'indiquer vers quelle case se déplacer
+                plateuDeJeu.changerCouleurCase(suggestion, 2, 3);
+            }
+
+            
+        }
+               
+
+    }
+
+    public void determinerEquipeJoueur(int equipe)
+    {
+        if (premierCoup)
+        {
+            equipeJoueur = equipe;
+            premierCoup = false;
+        }
     }
 
 }

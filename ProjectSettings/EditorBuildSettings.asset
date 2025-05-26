@@ -11,10 +11,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Information.unity
     guid: 4ddc49bb2efd20b4186434f358e8b08f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Niveau.unity
     guid: cff5a71cbd6a7a248a38999cf4af5c92
   - enabled: 1
     path: Assets/Scenes/Parametres.unity
     guid: 73d5fb31150fd0045b9c4e921ad64b4c
+  - enabled: 0
+    path: Assets/Scenes/EssaieLan.unity
+    guid: a93275136bf32fc4dae297e2d44c2c23
+  - enabled: 1
+    path: Assets/Scenes/plateau.unity
+    guid: 5e417d4b93d024a0f89562ed24931a38
+  - enabled: 1
+    path: Assets/Scenes/EssaieLan 2.unity
+    guid: 4be63940ffe927640b54f697f0ca4cfe
+  - enabled: 1
+    path: Assets/Scenes/plateau client2.unity
+    guid: 56bce42f9c6654c4686926d636080293
   m_configObjects: {}
